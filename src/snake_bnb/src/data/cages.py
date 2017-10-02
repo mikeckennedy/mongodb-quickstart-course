@@ -9,3 +9,8 @@ class Cage:
     allow_dangerous_snakes = None
 
     bookings = list()
+
+    meta = {
+        'db_alias': 'core',
+        'collection': 'cages'
+    }

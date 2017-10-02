@@ -5,3 +5,8 @@ class Owner:
 
     snake_ids = list()
     cage_ids = list()
+
+    meta = {
+        'db_alias': 'core',
+        'collection': 'owners'
+    }
