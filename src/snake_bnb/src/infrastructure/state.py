@@ -1,4 +1,6 @@
-active_account = None
+from data.owners import Owner
+
+active_account: Owner = None
 
 
 def reload_account():

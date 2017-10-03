@@ -1,6 +1,7 @@
 from colorama import Fore
 from infrastructure.switchlang import switch
 import infrastructure.state as state
+import servies.data_service as svc
 
 
 def run():
@@ -14,8 +15,9 @@ def run():
 
         with switch(action) as s:
             s.case('c', create_account)
-            s.case('a', log_into_account)
-            s.case('l', list_cages)
+            s.case('a', create_account)
+            s.case('l', log_into_account)
+            s.case('y', list_cages)
             s.case('r', register_cage)
             s.case('u', update_availability)
             s.case('v', view_bookings)
@@ -34,8 +36,9 @@ def run():
 
 def show_commands():
     print('What action would you like to take:')
-    print('[C]reate an account')
+    print('[C]reate an [a]ccount')
     print('[L]ogin to your account')
+    print('List [y]our cages')
     print('[R]egister a cage')
     print('[U]pdate cage availability')
     print('[V]iew your bookings')
@@ -47,10 +50,17 @@ def show_commands():
 
 def create_account():
     print(' ****************** REGISTER **************** ')
-    # TODO: Get name & email
-    # TODO: Create account, set as logged in.
 
-    print(" -------- NOT IMPLEMENTED -------- ")
+    name = input('What is your name? ')
+    email = input('What is your email? ')
+
+    old_account = svc.find_account_by_email(email)
+    if old_account:
+        error_msg(f"ERROR: Account with email {email} already exists.")
+        return
+
+    state.active_account = svc.create_account(name, email)
+    success_msg(f"Created new account with id {state.active_account.id}.")
 
 
 def log_into_account():
