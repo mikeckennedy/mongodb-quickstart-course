@@ -11,3 +11,8 @@ class Booking(mongoengine.EmbeddedDocument):
 
     review = mongoengine.StringField()
     rating = mongoengine.IntField(default=0)
+
+    @property
+    def duration_in_days(self):
+        dt = self.check_out_date - self.check_in_date
+        return dt.days

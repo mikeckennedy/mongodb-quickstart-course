@@ -124,3 +124,24 @@ def book_cage(account, snake, cage, checkin, checkout):
     booking.booked_date = datetime.datetime.now()
 
     cage.save()
+
+
+def get_bookings_for_user(email: str) -> List[Booking]:
+    account = find_account_by_email(email)
+
+    booked_cages = Cage.objects() \
+        .filter(bookings__guest_owner_id=account.id) \
+        .only('bookings', 'name')
+
+    def map_cage_to_booking(cage, booking):
+        booking.cage = cage
+        return booking
+
+    bookings = [
+        map_cage_to_booking(cage, booking)
+        for cage in booked_cages
+        for booking in cage.bookings
+        if booking.guest_owner_id == account.id
+    ]
+
+    return bookings
