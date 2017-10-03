@@ -52,7 +52,7 @@ def create_account():
     print(' ****************** REGISTER **************** ')
 
     name = input('What is your name? ')
-    email = input('What is your email? ')
+    email = input('What is your email? ').strip().lower()
 
     old_account = svc.find_account_by_email(email)
     if old_account:
@@ -66,30 +66,57 @@ def create_account():
 def log_into_account():
     print(' ****************** LOGIN **************** ')
 
-    # TODO: Get email
-    # TODO: Find account in DB, set as logged in.
+    email = input('What is your email? ').strip().lower()
+    account = svc.find_account_by_email(email)
 
-    print(" -------- NOT IMPLEMENTED -------- ")
+    if not account:
+        error_msg(f'Could not find account with email {email}.')
+        return
+
+    state.active_account = account
+    success_msg('Logged in successfully.')
 
 
 def register_cage():
     print(' ****************** REGISTER CAGE **************** ')
 
-    # TODO: Require an account
-    # TODO: Get info about cage
-    # TODO: Save cage to DB.
+    if not state.active_account:
+        error_msg('You must login first to register a cage.')
+        return
 
-    print(" -------- NOT IMPLEMENTED -------- ")
+    meters = input('How many square meters is the cage? ')
+    if not meters:
+        error_msg('Cancelled')
+        return
+
+    meters = float(meters)
+    carpeted = input("Is it carpeted [y, n]? ").lower().startswith('y')
+    has_toys = input("Have snake toys [y, n]? ").lower().startswith('y')
+    allow_dangerous = input("Can you host venomous snakes [y, n]? ").lower().startswith('y')
+    name = input("Give your cage a name: ")
+    price = float(input("How much are you charging?  "))
+
+    cage = svc.register_cage(
+        state.active_account, name,
+        allow_dangerous, has_toys, carpeted, meters, price
+    )
+
+    state.reload_account()
+    success_msg(f'Register new cage with id {cage.id}.')
 
 
-def list_cages(supress_header=False):
-    if not supress_header:
+def list_cages(suppress_header=False):
+    if not suppress_header:
         print(' ******************     Your cages     **************** ')
 
-    # TODO: Require an account
-    # TODO: Get cages, list details
+    if not state.active_account:
+        error_msg('You must login first to register a cage.')
+        return
 
-    print(" -------- NOT IMPLEMENTED -------- ")
+    cages = svc.find_cages_for_user(state.active_account)
+    print(f"You have {len(cages)} cages.")
+    for c in cages:
+        print(f' * {c.name} is {c.square_meters} meters.')
 
 
 def update_availability():
