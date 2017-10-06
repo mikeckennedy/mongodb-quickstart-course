@@ -1,4 +1,7 @@
-active_account = None
+from data.owners import Owner
+import servies.data_service as svc
+
+active_account: Owner = None
 
 
 def reload_account():
@@ -6,5 +9,4 @@ def reload_account():
     if not active_account:
         return
 
-    # TODO: pull owner account from the database.
-    pass
+    active_account = svc.find_account_by_email(active_account.email)
