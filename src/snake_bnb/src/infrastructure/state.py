@@ -1,5 +1,5 @@
 from data.owners import Owner
-import servies.data_service as svc
+import services.data_service as svc
 
 active_account: Owner = None
 

@@ -3,7 +3,7 @@ from dateutil import parser
 
 from infrastructure.switchlang import switch
 import program_hosts as hosts
-import servies.data_service as svc
+import services.data_service as svc
 from program_hosts import success_msg, error_msg
 import infrastructure.state as state
 

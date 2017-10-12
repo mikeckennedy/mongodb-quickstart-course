@@ -4,7 +4,7 @@ from dateutil import parser
 
 from infrastructure.switchlang import switch
 import infrastructure.state as state
-import servies.data_service as svc
+import services.data_service as svc
 
 
 def run():
