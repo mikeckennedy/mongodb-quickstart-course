@@ -3,7 +3,7 @@
 Course materials for Talk Python's **free** MongoDB course. 
 
 Learn the most popular NoSQL / document database: MongoDB.
-In just 1.5 hours, you'll be up and running with MongoDB and Python.
+In just 2 hours, you'll be up and running with MongoDB and Python.
 
 [![Course image](https://raw.githubusercontent.com/mikeckennedy/mongodb-quickstart-course/master/readme_resources/mongo-quickstart-logo-scaled.jpg)](http://freemongodbcourse.com/)
 
