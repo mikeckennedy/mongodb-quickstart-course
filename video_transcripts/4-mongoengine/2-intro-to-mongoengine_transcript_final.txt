@@ -1,0 +1,32 @@
+00:00 The ODM we're going to use for this course
+00:01 is MongoEngine, and you can find it's homepage
+00:04 and details about it, documentation and so on,
+00:07 at MongoEngine.org.
+00:08 So MongoEngine is open source like many things
+00:11 you'll find in Python, as we said,
+00:12 it depends upon PyMongo.
+00:14 You saw us install it earlier,
+00:16 we just did Pip install MongoEngine
+00:18 and that installed PyMongo with it.
+00:20 We did that through the requirements file
+00:21 but you can do that directly if you prefer.
+00:23 You can find MongoEngine on GitHub.
+00:26 You can see that it's quite popular,
+00:27 almost 2,000 stars.
+00:29 This is much more popular that the other MongoDB ODMs,
+00:33 as far as I can tell, looking at the other ones,
+00:35 this is the definitely most popular,
+00:37 at least, among the most popular of them,
+00:39 and it's very actively under development.
+00:41 I just took this screenshot right now
+00:43 before I started recording here
+00:45 to give you the latest version.
+00:46 You can see that it's been updated in the last 24 hours,
+00:50 and some other stuff under the actual code
+00:53 has been updated in the last 21 hours,
+00:56 so very active, this is important
+00:57 for an open source project you're going to depend upon,
+01:00 so I think you know, judging by that,
+01:02 MongoEngine is the best choice,
+01:03 and the API is excellent,
+01:04 we're going to start working with it next.

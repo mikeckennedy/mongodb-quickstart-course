@@ -1,0 +1,57 @@
+00:00 While MongoDB and MongoEngine
+00:02 let us work with these documents, make changes,
+00:05 and push them back in, there might be a better way.
+00:08 So, if we know that we want to just change
+00:11 some small part of the document in a very controlled way,
+00:14 we might want to use some of the atomic operators.
+00:16 So here let's suppose that there's a number of stays field,
+00:21 which is an integer, in the cage.
+00:24 So we just keep track of how many times
+00:25 people have stayed at it.
+00:27 Now there probably are better ways to get this,
+00:29 but let's suppose that is a number
+00:31 and we want to increment it.
+00:32 Instead of pulling the cage back
+00:34 and doing a plus equals one sort of thing and saving it,
+00:36 we can literally go to Mongo and say
+00:39 increment this number of value of number of stays by one.
+00:43 That could be negative, that could be ten,
+00:44 but I have one here.
+00:46 So you write the "query.update_one"
+00:49 And then pass a little operator.
+00:50 So that's really great.
+00:52 Now how about this putting the snake ID on the owner.
+00:55 We can do that too.
+00:57 Over here we're adding a snake.
+00:59 We generate the snake we call save.
+01:01 That's standard, that's an insert.
+01:02 But then this line where you have the number of updated,
+01:06 we have owner, objects, emails, email,
+01:08 and then instead of saying get it back,
+01:11 make the change, append it to the snake ID as impulse save,
+01:15 we're doing something with an operator.
+01:17 We're saying update_one, and we're using the push operator.
+01:20 That's $push.
+01:21 We're going to push it onto the snake IDs collection.
+01:25 Another thing we might do,
+01:26 which probably makes even more sense,
+01:28 would be add to set.
+01:29 It's another related operator that will say
+01:32 add this ID to this set or this list
+01:35 if and only if it doesn't already exist
+01:36 so you won't get duplicates.
+01:38 So we're pushing the snake ID on there
+01:41 that way we never pull the owner back.
+01:43 These are atomic.
+01:44 They're perfectly fine in concurrent situations,
+01:46 things like that.
+01:47 So this time we have to check that we updated it
+01:49 in a different way, but the same effect as we saw before.
+01:54 So MongoEngine supports these in place updates,
+01:57 array operations, and set operations.
+02:00 So increment as well as push,
+02:03 and these are both better for concurrent safety.
+02:05 Think of them as basically transactional
+02:07 and they're better in pure performance.
+02:09 They're not always as simple to work with,
+02:11 but they are better if you can use them.

@@ -1,0 +1,157 @@
+00:00 I don't know about you,
+00:01 but I feel like we've talked about coding
+00:03 and talked about MongoDB in theory enough.
+00:05 And it's time to write some code, and use MongoDB.
+00:08 So that brings us to getting started
+00:09 with our demo application.
+00:11 Throughout the rest of the course,
+00:12 we're going to spend a significant amount
+00:13 of time focusing on this.
+00:16 And remember, we're building Snakebnb.
+00:18 This wonderful experience where snake owners
+00:21 and their pets can share other snake cages
+00:24 when they're traveling.
+00:25 So they feel totally comfortable
+00:26 on every vacation you need to take your snake on.
+00:28 Of course, it's just a knockoff of Airbnb type thing.
+00:30 And in this video,
+00:32 we're going to see how to get it from GitHub
+00:34 and how to get it up and running in Python and PyCharm.
+00:36 So we'll start out over here on
+00:38 github.com/mikeckennedy/mongodb-quickstart-course.
+00:42 And you can see that we've got a couple things here.
+00:45 We've got some data.
+00:46 This is empty right now, but I'm going to fill it up
+00:47 with stuff as we go through the class.
+00:49 So you'll be able to recreate the database.
+00:51 There'll be instructions in there on how to restore that.
+00:53 Then if you go over to source,
+00:54 this is the most interesting part.
+00:56 We're going to be working in this area here,
+00:59 but I've made a snapshot of starter code Snakebnb.
+01:02 And this is exactly a snapshot of what we're starting from.
+01:05 Okay, but I'm going to be working in here
+01:07 because I want to have it build up, right?
+01:09 Also, try to do, make some branches or other save points,
+01:12 really obvious when we get to the various videos.
+01:15 Right now there's no other branches, but we'll get to those.
+01:17 Okay, let's go and check this out.
+01:19 So we'll go copy what we need.
+01:21 And we'll say "git clone" this.
+01:24 Nice and quick, and let's go work with it.
+01:26 Over here,
+01:29 we have our source code, and we have our Snakebnb,
+01:32 and we have our starter code Snakebnb.
+01:34 So these are the two projects here.
+01:37 And what I want to do is I'm going to put this into PyCharm.
+01:40 On macOS you can just drag and drop this onto PyCharm,
+01:43 and it'll load the project from that folder.
+01:45 However, if you do this on Windows or on Linux,
+01:49 I think you have to go to PyCharm and say,
+01:50 File, Open Directory.
+01:52 However, before I do, let's go into this folder really quick
+01:56 and create a virtual environment.
+01:57 So you may be familiar with Python,
+01:58 and virtual environments, and so on,
+02:00 but if you're not, let me give you the quick overview
+02:02 of what's going on here.
+02:04 If we look here we're going to have,
+02:06 apparently, a misspelled requirements file,
+02:09 which we're going to take care of in a second.
+02:10 But notice in this requirements file,
+02:12 these are the external libraries.
+02:13 PyMongo and MongoEngine for MongoDB
+02:16 and some other random stuff for working with color
+02:20 output on the console,
+02:21 as well as parsing date times entered from the user.
+02:25 So we need these libraries,
+02:26 and we don't want to install them and manage them,
+02:28 basically, as a machine-wide thing.
+02:30 We want to install them into our virtual environment.
+02:33 So, let's go over here first.
+02:35 Your name requirements.
+02:37 And we're going to go and actually
+02:39 create the virtual environment, and then we'll install.
+02:42 We can install stuff into it.
+02:43 So here we are again in this source folder.
+02:45 So we'll say Python3-M VENV.
+02:49 So run the virtual environment module into .env.
+02:52 This naming convention, .env,
+02:54 is something that PyCharm understands,
+02:56 will automatically detect, and start using.
+02:58 We're going to pass a test copies flag.
+03:00 That's only required on macOS, I believe.
+03:02 But, anyway, we'll go with that.
+03:03 Now, if we do an LSAH, you can see this hidden .env.
+03:07 But we don't need to do anything else with it,
+03:09 PyCharm should take it from here.
+03:10 So we can go and grab this folder.
+03:12 On macOS, remember, File, Open Directory on the other OSs,
+03:15 and drop it here.
+03:17 Let's go ahead and tell PyCharm about git.
+03:20 For the very first time PyCharm will index
+03:22 the Python environment we gave it.
+03:25 Then it should be up and running.
+03:26 Okay, so let's look dow here, the terminal.
+03:28 You should see the .env
+03:30 You can ask questions like, which Python?
+03:32 And it shows you it's the one that we created.
+03:35 In Window's it's "where Python," not "which Python."
+03:38 If we go over here we have our requirements and so on.
+03:40 Now, the other thing we need to do
+03:42 is we need to right click and say,
+03:43 set this as the relative path.
+03:46 In this file, when I import some other file,
+03:50 it looks relative to that.
+03:51 You can right click here and say,
+03:53 mark directory as sources route,
+03:55 or just be in this folder when you run it in Python.
+03:58 And basically, your working directory.
+03:59 Okay, so we're almost ready to run things.
+04:01 The last thing we need to do is install these requirements.
+04:03 So we can say, "pip install -r" the requirements file.
+04:08 And that will install those libraries for us,
+04:10 so when we run the application it has everything it needs.
+04:13 So if we try to run it now, it'll crash and say,
+04:14 it can't find Colorama or something like that.
+04:17 Now, this application is empty.
+04:18 It doesn't do anything
+04:19 other than ask for a couple of prompts.
+04:21 There's no data access for MongoDB, anything in here.
+04:24 But let's go ahead and just get it to run.
+04:25 So we can right click on "Program,"
+04:27 and right click and say "Run Program."
+04:30 It runs, and you can see, if I make it bigger,
+04:33 here we have our Snakebnb,
+04:34 and I put a little snake there for your guys.
+04:36 And it asks you a question: "Are you a guest or a host?"
+04:38 Are you looking for a cage,
+04:39 or do you want to offer up your cage?
+04:41 So let's go with guest.
+04:43 And it lets you do things like create an account,
+04:46 add your snake, and so on.
+04:47 So I could say, I'd like to log in.
+04:49 It says, you know, that's not implemented yet.
+04:51 In fact, that's what we're going to be doing next,
+04:53 implementing all of these features in the database,
+04:56 creating an account, logging in, booking a cage,
+04:59 viewing cages, things like that.
+05:01 All the actions you might do
+05:02 in a typical Airbnb situation.
+05:04 So that's it for now.
+05:06 We have this up and running.
+05:07 Let's do one more thing.
+05:09 Because of the output, I find this looks a little better
+05:11 if we just run it separate outside of PyCharm.
+05:14 So we can say copy the path here.
+05:17 And we're still in this folder with the .environment,
+05:20 so we need to activate it if we're going to run it over here.
+05:22 So we would say ". .env/bin/activate"
+05:28 On Windows, you don't need the first dot,
+05:30 and it's not "bin," it's "script."
+05:31 Script or scripts, I can't remember.
+05:33 I think it's "scripts."
+05:34 Either way, a prompt should change.
+05:36 And now we can run this.
+05:39 Here's our snake again.
+05:40 Okay, so we're all set up and ready to run our code.

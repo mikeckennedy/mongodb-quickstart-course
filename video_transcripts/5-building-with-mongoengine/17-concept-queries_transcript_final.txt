@@ -1,0 +1,22 @@
+00:00 We sound like querying the database
+00:01 is pretty straightforward.
+00:02 The way it works is we start
+00:04 with the collection,
+00:05 or the type that represents the collection,
+00:07 we want to work with.
+00:08 And then we say ".filter"
+00:10 so here we're saying filter,
+00:11 and we want to do a match, where the email
+00:14 equals the value of the email variable.
+00:16 And you could have more than one thing in here.
+00:18 You could have more than one filter statement,
+00:19 and those basically combine as an and.
+00:23 Now this would return
+00:25 potentially a bunch of owners,
+00:26 but we don't want a bunch of owners.
+00:29 We want the one that we know matches this email,
+00:31 so we can say ".first"
+00:32 and it'll give us the one, or at least the first,
+00:34 item to match.
+00:36 If there's no match, we get none back.
+00:38 We don't get a crash or anything like that.

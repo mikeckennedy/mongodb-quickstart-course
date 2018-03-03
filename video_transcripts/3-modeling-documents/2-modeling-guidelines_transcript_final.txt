@@ -1,0 +1,152 @@
+00:00 As we discussed, modeling with documents and
+00:03 document databases is little bit more art.
+00:05 There's a little bit more flexibility and
+00:07 kind of just gut-feel of how you should do it,
+00:09 but let me give you some guidelines that will
+00:12 give you a clear set of considerations
+00:15 as you work on your data models.
+00:17 You'll see that the primary question for working
+00:20 with document databases is to embed or not to embed.
+00:24 That is, when there's a relationship between
+00:26 two things in your application.
+00:28 Should one of those be a sub-document?
+00:31 Should it be contained within the same record
+00:33 as the thing it is related to?
+00:34 Or should they be two separate collections,
+00:36 (what MongoDB calls tables: collections),
+00:39 because they're not tabular, right?
+00:40 Should those be two separate collections,
+00:42 but just relate to each other.
+00:44 We're going to try to answer this question.
+00:46 I'll try to provide you some guidelines
+00:48 for answering this question.
+00:49 The first one is: is the embedded data
+00:52 wanted 80% of the time when you have the outer,
+00:56 or other related object?
+00:58 Let's go back to our example we just worked with.
+01:00 We had a book and the book had ratings.
+01:02 To make this concrete, the question here is
+01:05 do we care about having information about the ratings
+01:08 most of the time when we're working with books?
+01:10 So if our website lists books,
+01:13 and that listing has a number of ratings
+01:16 and the average rating, things like that,
+01:17 listed as part of the listing,
+01:19 you pull up a book, maybe the ratings,
+01:21 and the reviews are shown right there--
+01:22 most of the time, when we have the book,
+01:24 we have the ratings involved somehow,
+01:26 then we would want to embed the ratings within the book.
+01:29 That's what we did in our data model.
+01:30 We said, yes,
+01:31 we do want the ratings most of the time.
+01:34 Now, let's look at this in reverse.
+01:36 How often do you want the embedded data
+01:39 without the containing document?
+01:41 So in the same example, how often is it the case
+01:43 that you would like the ratings without the book?
+01:49 Where would that show up in our apps?
+01:50 So maybe you as a user,
+01:52 go to your profile page in the bookstore,
+01:55 and there you can see all the books you've rated, right?
+01:57 And the details about the ratings.
+01:58 You don't actually care about necessarily the books,
+02:00 you just want, these are the ratings
+02:02 that I've given to things, and here's my comment and so on.
+02:05 You don't actually want most of the details
+02:07 or maybe any of the details about the book itself.
+02:09 So if you're in that sort of situation,
+02:12 a lot of the time, you might want to put that
+02:14 into a separate collection and not embed it.
+02:16 You can still do it.
+02:18 You can still do this query and it'll come back very quickly,
+02:20 there's ways to work with it.
+02:21 But you'll see that you have to do a query in the database
+02:24 and then a little bit of filtering on the application side.
+02:26 So it's not prohibitive,
+02:31 it's not that you can't get the contained document
+02:33 without its container,
+02:34 but it's a little bit more clumsy.
+02:36 So if this is something you frequently want to do,
+02:39 then maybe consider not embedding it.
+02:41 Now, is the embedded document a bounded set?
+02:43 Let's look at ratings.
+02:45 How many ratings might a book have?
+02:47 10 ratings, 100 ratings, 1000 ratings.
+02:49 Is that number going to just grow
+02:51 The number of ratings that we have?
+02:53 If this was page views and details about the browser,
+02:57 IP address, and date and time of a page we viewed,
+03:00 that would not make a good candidate for embedding that,
+03:02 like say, for views of a book
+03:04 because that could just grow and grow
+03:05 as the popularity of your site grows.
+03:07 And it could make the document so large
+03:09 that when you retrieve it from the database,
+03:10 actually the network traffic and the disk traffic
+03:12 would be a problem.
+03:13 I don't really see that happening with ratings.
+03:15 I mean, even on Amazon, super popular books have
+03:18 hundreds not millions of ratings.
+03:20 So this is probably okay, but if it's an unbounded set,
+03:23 you do not want to embed it.
+03:25 And these have bounds small, right?
+03:27 Maybe millions of views still are being recorded
+03:31 within sign of a book would be a really bad idea.
+03:33 And the reason is these documents are limited
+03:35 to 16 megabytes.
+03:37 So no single record of MongoDB can be larger
+03:40 than 16 megabytes.
+03:41 And this is not a limitation of MongoDB.
+03:42 This is them trying to protect you from yourself.
+03:45 You do not want to go and just say, query buy, say, ISBN,
+03:49 and try to pull back a book
+03:50 and actually read 100 megabytes off a disk in
+03:53 over the network.
+03:53 That would destroy the performance of your database.
+03:56 So having these very, very large records is a problem.
+03:59 So they actually set an upper bound on how large
+04:02 that can be.
+04:03 And that limit is right now, currently,
+04:05 at the time of recording, 16 megabytes.
+04:07 But you shouldn't think of 16 megabytes as like,
+04:09 well, if it's 10 megabytes, everything's fine.
+04:11 We still got a long ways to go.
+04:13 No, you should try to keep these,
+04:15 in the kilobytes: tens, twenties, hundreds of kilobytes,
+04:18 not megabytes because that's going to really hurt your
+04:21 database performance unless in some situation,
+04:23 it just makes avton of sense to have these
+04:25 very large documents.
+04:25 So having small bounded sets means that your documents
+04:29 won't grow into huge, huge monolithic things
+04:32 that are hard to work with.
+04:33 Also, how varied are your queries?
+04:35 So one of the things that you do with document database is
+04:38 is you try to structure the document to answer
+04:41 the most common questions in the most well-structured way.
+04:46 So if you're always going to say, I would like to, on my pages,
+04:49 show a book in this related ratings,
+04:51 you would absolutely put the ratings inside the book
+04:53 because that means you just do a query against a book
+04:55 and you already have that pre-joined data.
+04:58 But if it's sort of a data warehouse
+05:00 and you're asking all kinds of questions
+05:02 from all different sorts of applications,
+05:04 then trying to understand, well, what is the right way
+05:06 to build my document so it matches the queries
+05:08 that I typically do or the ones that I need to be
+05:10 really quick and fast?
+05:12 That becomes hard because there's all
+05:13 these different queries and
+05:15 the way you model for one is actually the opposite
+05:18 of the way you model for the other.
+05:20 So depending on how focused your application is,
+05:22 or how many applications are using the database,
+05:24 you'll have a different answer to this question.
+05:26 So the more specific your queries are,
+05:28 the more likely you are to embed things and structure them
+05:31 exactly to match those queries.
+05:33 Related to that, is are you working with an
+05:36 integration database or an application database?
+05:39 We'll get to that next.

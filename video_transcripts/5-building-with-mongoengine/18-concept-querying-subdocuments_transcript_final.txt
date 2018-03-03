@@ -1,0 +1,33 @@
+00:01 When we're creating against just plain, straight fields
+00:04 in our object, that's pretty straightforward.
+00:06 We said email equals the value that we're looking for,
+00:09 but if we're looking deep inside of a hierarchy,
+00:12 it can get a little more, let's say, not obvious.
+00:15 So we're combining two really interesting things here.
+00:17 We're going to the cage and we're going to search within
+00:20 the bookings embedded document list, right?
+00:25 Bookings is a list and it contains a bunch
+00:27 of these booking objects.
+00:29 So the first thing that we're doing is using double
+00:30 underscores say bookings, guest, snake ID.
+00:33 So we're looking at the value guest snake ID of the booking
+00:36 items within that list and we're also applying
+00:40 the N operator.
+00:41 So the double underscore N means the collection
+00:45 on the right, we're doing an N test for the various booking
+00:49 and the snake ID.
+00:51 So we use the double underscore to separate and navigate
+00:53 the levels in subdocuments as well as to apply
+00:57 the particular dollar operators and then what I consider
+01:01 best practice is to fully execute the query before
+01:05 you leave this function.
+01:06 If we just returned book cages, it kind of still
+01:09 is not yet executed.
+01:10 It hasn't quite talked to the database and so I want
+01:12 the database to be done and over with by the time
+01:14 we leave this method.
+01:15 So wrapping it in a list will execute all that stuff
+01:19 and pull it back.
+01:20 For super large amounts of data, there might be reasons
+01:22 you don't do this, but for most of them, I would do
+01:26 something like this.

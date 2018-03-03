@@ -1,0 +1,62 @@
+00:00 So wait, what is an integration database?
+00:02 If you were just working on your own personal website
+00:05 or some small project,
+00:06 you don't have an integration database.
+00:08 But if you work in a big enterprise,
+00:10 a big corporation where there's many internal systems,
+00:13 you may be working with an integration database.
+00:15 Honestly, that's not a great fit
+00:17 for NoSQL databases in general.
+00:19 It also makes designing documents
+00:21 for them more difficult.
+00:22 In large corporations where you have many applications
+00:26 that share the same data,
+00:27 one way that we have built applications to share data
+00:31 is to just share the same database.
+00:33 We might have a bunch of different applications
+00:36 and they're all going to talk to the same database
+00:38 so they all have the same concept of a user,
+00:40 they all have the same concept of an order,
+00:42 things like that.
+00:43 And this means the concept of the user
+00:45 is as complicated as it can get.
+00:47 Maybe the application on the top left
+00:48 could have a real simple user,
+00:49 the one on the top right actually needs something else,
+00:52 the bottom one is something else still
+00:54 until you've got a model across all these applications,
+00:56 and that makes it super tricky.
+00:58 Also in NoSQL databases and document databases,
+01:01 the relationships are enforced in the application,
+01:03 so that means all of these have to agree on
+01:05 what the constraints are, what the relationships are,
+01:08 and that can actually cause data integrity issues.
+01:10 There's a lot of reasons
+01:11 that an integration database isn't a great idea
+01:13 for relational databases.
+01:14 In fact, it's not a great idea at all, but it has been used
+01:17 and because there's different applications
+01:19 with different query patterns,
+01:20 it makes designing your documents more difficult.
+01:23 So instead what do we do?
+01:24 We build application databases.
+01:26 Maybe we have a bunch of different applications
+01:28 just like before, but they all have their own data store
+01:30 and they all talk to their own databases.
+01:33 Of course they need to exchange data before
+01:35 so maybe we do some sort of microservice thing
+01:37 where they talk to a service bus
+01:38 or they just talk to each other, things like that.
+01:40 That means each individual database
+01:43 and interaction with its own application
+01:45 is super, super focused and limited.
+01:48 Here in these cases,
+01:49 MongoDB document databases make a lot more sense,
+01:52 and it's easier to design the documents
+01:54 because the range of queries is extremely focused
+01:58 so you can target those particular questions
+02:00 against a small set of queries,
+02:03 the guidelines we just talked about.
+02:04 So this is the kind of model you want to have
+02:06 if you're doing data exchange within your organization,
+02:10 and you're working with a document database.

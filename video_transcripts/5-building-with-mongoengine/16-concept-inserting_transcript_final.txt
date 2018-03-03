@@ -1,0 +1,30 @@
+00:01 Now we built our app but let's review
+00:02 some of the core concepts we saw along the way.
+00:05 If we want to insert an object
+00:07 we just create a standard Python object style.
+00:11 We just say owner = owner.
+00:13 Called the initializer.
+00:15 We could either pass the values as keyword arguments
+00:18 or we could say owner.name = name.
+00:20 Owner.email = email.
+00:22 And at this moment there is no ID associated
+00:25 with this object.
+00:26 But then we just call owner.save()
+00:27 and now the object ID or whatever the primary key is
+00:32 we can set functions to be called
+00:33 when that happens for that generation.
+00:36 Whatever that's going to be.
+00:37 We've got it set after you call save,
+00:40 so now you can start working with it
+00:41 as if it came from the database.
+00:43 We also might want to insert a bunch of things.
+00:46 It turns out, if you have 100,000 items to insert,
+00:49 and you create one save, create one called save,
+00:52 create one called save, it's a lot of database
+00:55 back and forth, and it's very slow.
+00:56 So what you would rather do is create a list of them.
+00:59 So here we have a bunch of snakes we want to save,
+01:01 we create a bunch of them, put them in this list,
+01:03 and then you call snake.objects().insert(snakes)
+01:05 and you give it the list, and that's much quicker
+01:07 if you want to do a bulk insert type of thing.

@@ -1,0 +1,69 @@
+00:01 It's time to write some code against MongoDB
+00:04 and connect to MongoDB and we're going to do that
+00:05 with an ODM: an Object Document Mapper.
+00:08 If this term's new to you,
+00:09 think of Object-Relational Mapper, like SQLAlchemy,
+00:12 but for document databases instead.
+00:14 So, let's compare first this ODM-style of programming
+00:18 against the most basic, lowest level way to program,
+00:22 or interact with, MongoDB from Python called PyMongo.
+00:25 Every programming language
+00:26 that you can talk to MongoDB from, see there is many of them
+00:29 20, 30, something like that.
+00:31 Many, many languages can talk to MongoDB
+00:34 and they each have what's called a driver,
+00:35 and this is typically provided by MongoDB,
+00:38 the company itself.
+00:39 PyMongo is no different.
+00:41 It's this low level foundational way to talk to MongoDB
+00:46 and you do this in the native query syntax
+00:48 of MongoDB, this Java Script JSON-style
+00:52 of interacting with the database.
+00:53 Now, it's important to know that
+00:55 if you're working with MongoDB
+00:56 in terms of running and managing it,
+00:58 but from writing code, we're going to focus on something
+01:01 higher level: an ODM, so we can take structured classes
+01:05 and map those to and from the database.
+01:07 So let's see how it would work if we just used PyMongo.
+01:09 We've got our app here and we have the PyMongo package
+01:13 we're going to work with, and we have MongoDB, the database.
+01:15 We write direct queries in this raw MongoDB API.
+01:20 You have to know the API really carefully.
+01:22 You have to map those back to your classes.
+01:24 Basically what you do is you pass dictionaries to PyMongo.
+01:28 It uses those as part of the query
+01:29 and then you get the dictionaries back.
+01:31 It's pretty unstructured but it's very low-level and fast.
+01:33 With an ODM, similarly, we've got our app
+01:36 and we've got PyMongo and MongoDB,
+01:38 but we also have another layer,
+01:40 the layer that we directly interact with,
+01:41 called the ODM, Object Document Mapper.
+01:44 And there's a bunch of different kinds.
+01:45 There's MongoEngine, there's Ming, there's MongoKit,
+01:48 there's MongoAlchemy, MiniMongo,
+01:51 and there's more than that actually; there's a ton of them.
+01:54 Just so happens we're going to use MongoEngine,
+01:55 one of the more popular and well-polished ones.
+01:58 So, in this model, we don't query in terms
+02:01 of raw dictionaries against PyMongo,
+02:02 we just talk to the classes to find by the ODM.
+02:05 And our queries are based on those types, on those classes.
+02:09 That itself will translate to the MongoDB API
+02:13 sometimes in real basic ways,
+02:14 sometimes in really advanced ways,
+02:15 and it'll actually leverage some of the advanced operators.
+02:18 The dollar operators, if you're familiar with them,
+02:21 for MongoDB like dollar set, dollar add to set,
+02:23 things like this.
+02:24 So really, really cool that it leverages
+02:27 the advanced operators, not just save this document,
+02:30 read this document-type programming.
+02:32 I think the ODM model is a much
+02:34 better way to write your application.
+02:36 You'll see there's not much structure
+02:37 in a schema-less database, so having a little bit
+02:41 of extra structure to find by these classes
+02:43 that are a part of this ODM model really adds
+02:46 a lot of safety to your application, in my opinion.

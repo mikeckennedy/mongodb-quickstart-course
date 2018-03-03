@@ -1,0 +1,24 @@
+00:00 I want to take this moment
+00:01 to remind you to get the source code, come over to:
+00:04 Github.com/MikeCKennedy/MongoDB-QuickStart-Course
+00:08 and star and fork this so you're sure to have a copy.
+00:12 So one thing I do want to take you through
+00:14 really quick, two things.
+00:15 One, I covered in the beginning,
+00:17 is there is the starter code, which is here.
+00:20 This is exactly what we started from.
+00:22 And here is what we have finished with.
+00:25 You can see, right there, 15 minutes ago
+00:27 I wrote the final code.
+00:29 But I also wanted to make sure
+00:30 there were saved points along the way,
+00:32 so if we go back here and check out the branches,
+00:35 you'll see there's all these different branches.
+00:37 So these are all different save points that you can grab.
+00:40 So if I go here, for example,
+00:42 you can see final registered and list cages,
+00:45 guests can now book a snake into a cage, and things like,
+00:48 so these are different points in the course
+00:50 that you can go back and forward to.
+00:51 So be sure to make use of the branches
+00:54 and things like that if that can help you.

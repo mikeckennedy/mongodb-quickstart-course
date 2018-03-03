@@ -1,0 +1,87 @@
+00:01 Let's begin by looking at why you might choose MongoDB
+00:05 over other NoSQL databases, other document databases,
+00:09 or even other relational databases.
+00:12 I'm sure you've heard of MongoDB.
+00:14 That's why you're taking this course.
+00:15 But how popular is it relative to other databases?
+00:19 Is it really the right choice?
+00:20 Well, let's look at some data from 2017.
+00:23 If you compare MongoDB against other NoSQL databases,
+00:27 Cassandra, CouchDB, RavenDB, things like that.
+00:31 You will find one of these databases is unlike the others.
+00:34 Look at that, that's incredible,
+00:36 how much more popular MongoDB is over these.
+00:39 It's not just the popularity that it's five,
+00:42 10 times, maybe 50 times more popular than RavenDB.
+00:46 That's great.
+00:47 That's very important.
+00:47 But also, the trend.
+00:50 These others are either flat or turning downwards.
+00:51 And this is, besides the little blip here,
+00:54 based on probably the end of the year numbers
+00:57 or something like that.
+00:58 At the end of the data, this is a really big deal.
+01:01 This is incredible how much growth is here,
+01:04 and it's still going up.
+01:05 MongoDB is really, really popular
+01:07 in terms of a database that people are using.
+01:11 And that's great because that means it's well-tested.
+01:14 When we get the section a little bit later,
+01:16 we'll look at some of the users of MongoDB.
+01:18 But it's really important
+01:19 that there are some heavy workloads put onto these databases
+01:23 that you're going to depend upon.
+01:24 And if it can take what those people are doing,
+01:26 surely, it can take what you have to throw at it as well.
+01:29 Now, MongoDB is also loved.
+01:31 If you look at Stack Overflow,
+01:33 at their 2017 Developer's Survey,
+01:36 and you look at the most loved databases:
+01:38 these are databases that the developers are using currently
+01:43 and how they feel about it.
+01:44 We see MongoDB ranks right near the top.
+01:46 So, definitely 55% of the people
+01:49 who are using MongoDB love it compared to
+01:51 say SQLite or Cassandra.
+01:54 So, this is pretty good.
+01:55 But what's even more interesting
+01:56 is that it's the most wanted database.
+01:59 These are technologies that you're not currently
+02:01 able to work with but you would like to.
+02:03 So, there are tons of people that want to work with MongoDB
+02:05 but for whatever reason, they've got some Legacy system
+02:07 built on MySQL or whatever, they don't get the chance to.
+02:11 All these pieces of data tell you
+02:13 MongoDB is a really good technology to have
+02:15 in your tool belt.
+02:16 And it's easy to get ahold of.
+02:18 MongoDB is open source and it's free.
+02:20 You can just go to github.com/mongodb/mongo
+02:23 and clone it and it's right there.
+02:25 You can see it has 11,000 stars, 3,000 forks.
+02:29 And this screenshot I took here was updated two hours ago.
+02:32 It's under very, very active development.
+02:34 It's a live and vibrant project.
+02:36 Finally, if you actually want to get MongoDB,
+02:38 don't go to GitHub.
+02:40 GitHub is cool, it's great.
+02:41 You have the source but don't go there.
+02:42 What you really want to do is you want
+02:43 to go to mongodb.com/download-center.
+02:47 Or just go to mongodb.com and click Download.
+02:49 It'll take you here.
+02:50 And you download here, you get it as binary.
+02:53 So, if you're on Mac,
+02:54 I recommend you use Homebrew to install it.
+02:56 But you can also download a tarball.
+02:58 If you're on Windows, get the MSI.
+03:00 And on Linux, you can actually install it
+03:02 with aptitude or some package manager like that.
+03:05 In this course, we're not going to go into the details
+03:07 of setting up MongoDB.
+03:08 Just follow the instructions.
+03:09 In the full MongoDB course you have,
+03:11 we walk through all the steps,
+03:12 but we just want to get started.
+03:13 This the quick start.
+03:14 So, let's keep moving.

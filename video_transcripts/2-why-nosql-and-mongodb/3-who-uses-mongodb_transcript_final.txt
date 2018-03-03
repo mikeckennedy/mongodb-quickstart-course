@@ -1,0 +1,66 @@
+00:02 Before we move on,
+00:03 let's take a moment and look at who uses MongoDB.
+00:06 Programming languages and databases
+00:09 and technologies aren't necessarily popularity contests.
+00:13 Just because something's popular
+00:14 doesn't necessarily mean that it's great:
+00:17 evidence, PHP for example,
+00:19 or VB, or something like this.
+00:20 Technologies are popular and some of them are great,
+00:23 and sometimes great technologies are popular.
+00:25 There are some important things that come along
+00:28 with being popular and used by big important companies.
+00:32 That means these things are durable,
+00:34 tested, and have really been through the ringer.
+00:36 MongoDB has been used by some really big customers
+00:40 and some really interesting use cases.
+00:42 I know some of the biggest ones
+00:44 are not on this page even.
+00:46 They're not listed here.
+00:46 So we're going to take a quick tour of a couple of customers
+00:49 who are using MongoDB
+00:50 and we'll look at how they're using it.
+00:52 Okay, so the first one that I want to look at,
+00:54 scroll down here, you can see names that you might know.
+00:56 Some cool stuff here.
+00:57 Let's check out Royal Bank of Scotland.
+00:58 Banks are supposed to be conservative.
+01:01 Things like this, they probably wouldn't use weird
+01:03 NoSQL document databases,
+01:04 they're going to stick to their traditional Oracle
+01:06 or single server, or whatever.
+01:07 Well, if we look at Royal Bank of Scotland,
+01:09 they're using MongoDB
+01:11 to support a global enterprise data service
+01:14 underpinning several core trading systems.
+01:16 If you're a bank, the core trading systems are
+01:18 pretty much the center of the universe, right?
+01:22 So the fact that they're driving that with Mongo,
+01:23 and that's high performance,
+01:25 and it's doing that for them,
+01:26 that's really awesome.
+01:26 Let's check out Expedia.
+01:27 Expedia, they have their app built on MongoDB,
+01:30 and they are supporting millions of customers
+01:32 shopping for flights, hotels, cars, things like that.
+01:37 That's pretty awesome.
+01:38 Let's check out another one down here.
+01:39 EA, so video games.
+01:41 This is the world's best-selling sports game franchise,
+01:43 and they rely on MongoDB to scale the millions of players.
+01:47 That is really awesome.
+01:48 One more, before we move on.
+01:49 These guys down here a little farther,
+01:52 that's SailThru.
+01:54 SailThru is a company that does outbound mail
+01:57 and analytics and things like that.
+01:58 They are a marketing company
+02:01 very much doing tons of email type of stuff, like I said.
+02:04 And they have over 40 TB of data
+02:06 and a 120 physical, mostly physical, nodes.
+02:10 So 120 servers all working, running MongoDB,
+02:16 in some giant cluster, which is a pretty awesome use case.
+02:20 And, of course, you have things like Shutterfly
+02:21 running on MongoDB, Squarespace, on and on.
+02:24 There's a ton of cool use cases down here,
+02:26 but I think you've got the idea.

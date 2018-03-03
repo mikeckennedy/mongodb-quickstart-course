@@ -1,0 +1,51 @@
+00:00 Let's take a moment and look
+00:01 at this concept of registering connections.
+00:03 We're going to need to work with MongoEngine,
+00:05 so of course, "import mongoengine"
+00:07 and we need to set the alias and the name of the database,
+00:10 so it should say "mongoengine.register_connection"
+00:12 give it the alias, give it the name.
+00:14 We need to call this before we start interacting
+00:16 with our classes and other types, before we try
+00:19 to do any queries or save any data, this has to be set up.
+00:22 So, this is what we wrote in our application
+00:23 and this works fine when you're talking to
+00:25 the local MongoDB running no encryption, no accounts,
+00:29 default port running on the local machine.
+00:31 Same machine that this could.
+00:32 Now, if you're doing this in production, there's more to it.
+00:35 You need to set the username and password,
+00:37 which you have to set up in MongoDB,
+00:39 there's none by default, so you got to
+00:41 set that up with the right permissions.
+00:43 Probably it's a different server on
+00:44 an alternative port, so set the host and the port.
+00:47 You would like to create some sort of admin account,
+00:50 which is associated with that username and password
+00:52 so you say, "Look you authenticate an admin,
+00:54 use this mechanism."
+00:56 Finally, if you're going to do connections across,
+00:59 somewhere outside your data center you pretty much
+01:01 should just turn this on, you need to turn on SSL
+01:03 and configure the server for SSL.
+01:05 And then you pass that additional data
+01:07 in addition to the alias and the DB.
+01:10 Now, there's a lot going on here, and deployment
+01:12 and running MongoDB and production
+01:14 is not as simple maybe, as it could be.
+01:16 Certainly it's something that you need to be very careful
+01:19 about, like no authentication, no encryption, right?
+01:22 Don't run your code that way, it's fine to do it
+01:24 for development, but don't do it for production.
+01:27 In my full MongoDB course I actually go into,
+01:30 spend an hour, go and create a Linux server
+01:32 and set it up in a cluster of the database
+01:34 and the web servers and those kinds of things
+01:36 and really make this work perfectly and safely.
+01:39 But, in this course we're not going to go into it,
+01:41 I just want to leave you with you need to set this up
+01:43 you can look at the MongoDB.org site as well,
+01:46 and MongoDB.com site and go through
+01:47 the documentation on some of the steps.
+01:49 Or, just take my other course if you're
+01:51 really going to go and use this in production.

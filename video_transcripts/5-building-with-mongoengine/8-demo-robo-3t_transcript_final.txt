@@ -1,0 +1,32 @@
+00:00 So we saved some data, and it looked like
+00:02 it went into the database, right?
+00:03 When we successfully saved it, we saw an idea was generated.
+00:07 When we tried to log in with the same,
+00:08 or create an account with the same email,
+00:10 we got an error node that it already exists,
+00:11 So, it's definitely working, but let's look at the data.
+00:14 With my favorite tool for working with MongoDB,
+00:18 Robo 3T, it use to be called Robomongo.
+00:21 Robo 3T, so here it is, you can see
+00:24 just by virtue of calling save
+00:26 that actually connected to the database,
+00:28 created this particular ... connected to the server
+00:31 created this database and the various collections.
+00:34 We only called save on owners, we only have owners so far.
+00:38 Nevermind the fact that we created the other types.
+00:40 We haven't saved anything there so, it doesn't exist.
+00:43 Wwe can come down here, we can say view documents
+00:45 and we actually have the two documents here.
+00:47 Remember, we created two accounts.
+00:49 We can view them this way, and there you go.
+00:52 We have Michael and my email, Sarah and her email,
+00:55 the registered dates and times
+00:57 and we don't yet have a snake or a cage cause,
+01:01 because well, we haven't implemented the ability to do that.
+01:03 But, we're going to have snake IDs and cage IDs
+01:05 in here as we create these snakes and cages.
+01:08 This is a really great way to work with the data
+01:10 if you go back to this mode you can even edit it,
+01:14 and make changes in here if you really wanted to.
+01:17 Alright, so definitely recommend installing this.
+01:19 It works on all the platforms, it's free and it's awesome.

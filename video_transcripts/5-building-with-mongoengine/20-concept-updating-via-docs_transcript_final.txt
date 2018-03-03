@@ -1,0 +1,37 @@
+00:00 The most straightforward way
+00:01 to make changes to a document, or to a record
+00:04 is to go get it from the database,
+00:06 change the class, and call save.
+00:08 So in this example,
+00:09 we're going to go get the owner out of the database.
+00:11 Make sure that's all good, don't want to have errors.
+00:14 We're going to create a snake,
+00:15 we're going to do work with the snake,
+00:17 and then we want to append the snake ID
+00:21 onto the owners snake ID collection.
+00:25 So on line 11 we say owner.snakeIDs.append,
+00:28 and we give it this new ID that was gotten
+00:31 from the snake on line nine, when we called save.
+00:33 And we save the owner, and that's that.
+00:36 So we get the document, we make a change to it,
+00:38 in the case of line 11 here, and then we just call save
+00:40 and that pushes it back.
+00:42 This works, but that transfers the entire document
+00:45 out of the database, over to our app,
+00:47 deserializes it, processes it,
+00:49 and then reverses that back to the database.
+00:52 That can be slow,
+00:53 but that can also have concurrency issues.
+00:56 If two people run this exact same method
+00:59 at almost exactly the same time,
+01:01 with the same email address, there's a chance
+01:04 that one save is going to overwrite
+01:06 the snake ID's of the other, right.
+01:08 Both of them read the owner,
+01:09 one makes a change, one makes a change,
+01:11 one saves, the other saves.
+01:12 You only have one snake, not two.
+01:14 So there are challenges with this,
+01:16 but if you're pretty confident that that's not an issue
+01:18 you're going to run into, this is a really nice
+01:20 and easy way to do it.

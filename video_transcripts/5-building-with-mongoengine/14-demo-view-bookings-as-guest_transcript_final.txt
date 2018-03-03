@@ -1,0 +1,137 @@
+00:00 Alright we're down to the very last thing we're
+00:02 going to do as a guest which is to view our bookings.
+00:05 We're able to book a gauge but as a guest we couldn't see
+00:09 what are your upcoming stays for your snakes
+00:12 and things like that. So, again, just for the sake of time
+00:15 let me go over here and put some pre-written code
+00:17 and we'll go write the data access later.
+00:21 So, require an account and we're going to call
+00:24 "get_bookings_for_user" and this is going to return a set of
+00:27 bookings and just to remind you what that looks like
+00:30 the bookings are going to have the days, possible reviews and
+00:33 the snake ID is going to be really important.
+00:37 So what we want to do is we want to say give us the snake
+00:41 given a snake ID and a super simple way for us to do that
+00:44 is to actually generate a dictionary using a
+00:47 dictionary comprehension. So this little expression on here
+00:51 is going to create a dictionary where they key is the ID
+00:54 and the value is the snake for all the snakes
+00:58 belonging to us, whoever the logged in user is.
+01:00 Then we're going to get the bookings and this part we're
+01:03 going to write and then we're going to loop over here
+01:06 and we're going to print out the snake
+01:10 and we'll use the dictionary to look up
+01:11 to get the name here. We're going to print the cage name
+01:15 and you're going to import date/time there.
+01:19 We're going to create a date/time and do a little bit
+01:22 of math here on the check out. So we're going to turn this
+01:25 back into day. If you're checking in on this day
+01:27 for five days or something like that.
+01:29 Okay so that's what our view bookings UI
+01:33 pretty much stretch. Right, with our app
+01:36 this is kind of the UI code, if you will.
+01:39 But we've got to write this bookings for user
+01:43 this is going to be a "bson.ObjectID"
+01:48 We'll bring it back as a list of booking, I believe.
+01:52 Now, notice one other thing before we write this code
+01:56 Over here we're saying "b.cage.name"
+02:00 Now cages have bookings, but bookings don't have cages.
+02:04 There's not a super nice way to create that
+02:07 reverse association in MongoEngine,
+02:11 so what we're going to do is part of what we're going to do
+02:14 in this function is we're going to set up that relationship
+02:17 and let's call this "user_id" or account ID
+02:20 or something like that. Okay, so
+02:22 the first thing we need to do is find the owner
+02:25 so close account equals let's pass in an email instead
+02:31 something like that and before I forget
+02:33 pass in the email there. Okay great.
+02:35 We'll have our account and we've already verified
+02:38 that they're logged in. So we can just assume that
+02:40 that happens. So we can say booked cages and so we can
+02:43 find all the cages that have been booked
+02:46 by this person. So we can say "Cage.objects"
+02:51 and now we'll do a few other interesting things
+02:52 we haven't seen yet. Let's say filter
+02:54 and here we'll say "bookings__"
+02:58 and then we're looking for
+03:00 the guest owner ID. Let's go to our booking
+03:06 that matches the owner. That equals to "account.id"
+03:14 We don't actually care about all the details about the cage
+03:16 and you can skip this little part right here,
+03:18 but just as a means of efficiency we go over here
+03:22 and say only. We haven't talked about this yet.
+03:24 What we can do is say we only want to get back
+03:27 two pieces of information not potentially tons of
+03:30 information in this document. We want the bookings,
+03:34 and we want the name. So when we say "cage.nameabove"
+03:37 that means something, right?
+03:40 So let's create the bookings and we'll do this with
+03:42 a list comprehension. So we'll say bookings is this
+03:46 and I'm going to write it one way and then I'm going to have
+03:48 to make a change to do this reverse association with
+03:50 the cage. So I can say booking
+03:55 or booking in the book cages
+03:59 but remember there are other bookings that are unrelated
+04:02 to us. Here right could be two different snakes staying
+04:04 in the same cage, different days. We need a little test
+04:12 alright so this is going to be the bookings that are
+04:17 assigned to us within the cages for which we have booked
+04:21 right, so show me all the cages where we've booked
+04:23 at least one of the bookings and we're going to strip out
+04:26 the unrelated ones. So you might think that we're kind of done
+04:29 and that we're very, very close to done, but we're not done.
+04:33 So we've run this, you should see this is going to crash.
+04:37 It's that line right there. I almost messed up.
+04:40 So if this is actually for cage in the booked cages
+04:44 and each cage contains a booking. So we've got to do a
+04:47 double loop here. Booking in "cage.bookings"
+04:52 What we're going to do is going to take the tyrannical list of
+04:54 cages which nested inside them contain a bunch of bookings
+04:59 and we're going to flatten that list with a double loop
+05:02 go through each cage, go through each booking and just
+05:04 turn that into a list and across all those bookings
+05:08 across all the cages only show the ones which we some point
+05:11 have booked. Okay so this is close but if we try to run it
+05:16 this reverse lookup of the cage here it's not going to work.
+05:21 So, let's see we're going to try and run that real quick
+05:24 save, go to guest login as Sarah
+05:30 now if we try to view your bookings
+05:32 we see no cage. So let's view one more little trick.
+05:36 We can do a transformation at this level, right
+05:39 this is like the select part of the list comprehension
+05:42 now this has to be an expression
+05:44 I don't think we can do this with a lambda expression
+05:49 cause it doesn't allow us to make modifications
+05:51 so we got to define this little local function
+05:53 so we'll say "map_cage_to_booking"
+05:59 given a cage and a booking this is going to
+06:03 be the silliest thing you've seen. "booking.cage = cage"
+06:08 well, and then we're going to return cage--sorry--booking
+06:13 but why do we need that? We need that so we come down here
+06:16 and we add this function. It's going to take a booking and it's
+06:20 going to put that same booking right back into the list
+06:24 but the booking will be changed in that it's
+06:25 going to have a cage associated with it.
+06:27 Okay, I know that's not super obvious but that's what
+06:30 we need to make that one line work.
+06:33 I made a quick error here, I had booking cage here
+06:38 and cage booking there so cage booking, cage booking
+06:42 okay looks like its ready. We'll try again.
+06:55 Alright, so fewer bookings. Woo hoo it works!
+06:57 We have one booking. Our snake Slither is booked in the
+07:01 large boa on the stay for five days.
+07:04 Let's add one more booking just to make sure this is working.
+07:07 We'll book a cage, alright so let's try to book that other
+07:12 available booking. This time we're going to put Bully in there
+07:16 and I guess we're going to book that one. Great
+07:18 we view our bookings again. We now have our snakes booked
+07:20 into the different sections at the different times.
+07:24 Let's just try one more time now that those bookings
+07:26 should have been used up, to see what happens.
+07:30 So let's try to book one more cage. Say we'll start
+07:32 on that date and we'll check out on that date
+07:35 and we'll use this one. "Sorry, no cages, both
+07:38 available spots have already been booked." Just so happens
+07:41 to be to our snakes. Awesome.
+07:43 It looks like the guest side of things is 100% working

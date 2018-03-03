@@ -1,0 +1,72 @@
+00:00 Let's look at one of these records stored in MongoDB
+00:03 to see how document databases work.
+00:05 Here we have a JSON record.
+00:08 This is actually from one of my courses,
+00:10 the Python Jumpstart by Building 10 Apps,
+00:12 and this is how I represent it in the database.
+00:14 We've got standard columnar type things,
+00:17 so we have an ID, we have a title, a course ID,
+00:20 duration in seconds, these types of things.
+00:22 Now, first of all, you might be wondering,
+00:24 wait a minute, JSON database?
+00:26 JSON database, is that really efficient?
+00:28 Well, probably not.
+00:29 What MongoDB actually stores is a binary representation.
+00:33 So like a binary tokenized version of this record,
+00:37 but they call it BSON,
+00:38 because it's like binary JSON.
+00:40 But we're humans, we don't read binary, we read text.
+00:43 So we're looking at the textual representation.
+00:45 So this is not exactly how it gets stored,
+00:46 but this is pretty close.
+00:47 So we have these regular column type pieces of information,
+00:51 ID, title, and so on,
+00:53 but we also have this other thing, these lectures.
+00:55 Now these lectures are in this chapter represented
+00:58 by this record from this course,
+00:59 and notice the bracket in JavaScript,
+01:02 which basically this
+01:03 means that it is an array.
+01:06 And the array contains a bunch of sub-objects.
+01:08 So this is really interesting.
+01:09 Instead of just having a chapter table
+01:12 and a lecture table,
+01:13 and doing a join or something like that,
+01:15 a form key relationship,
+01:16 we're actually putting the lectures inside the same record.
+01:19 This is pretty interesting.
+01:21 When you look at it like this,
+01:22 you can imagine that this is like a precomputed join.
+01:25 If I do a query for the lecture,
+01:28 say, given ID1001,
+01:30 and I get this record back, it already has the lectures.
+01:33 I don't have to make another round trip
+01:35 to the database to get them.
+01:36 I don't have to do a join against several tables
+01:39 in that original query.
+01:40 It's literally a primary key query
+01:42 against an indexed primary key and is insanely fast,
+01:45 yet it already comes back
+01:46 with all this extra information.
+01:48 So this is really cool.
+01:49 If I get the chapter, I have the lectures, great.
+01:51 But, you might be wondering well, really,
+01:54 what if I need to ask the question in reverse?
+01:57 Like, fundamentally, if I need to get at lecture 10106,
+02:02 will I be able to query MongoDB quickly and efficiently
+02:06 to get that lecture?
+02:08 And it turns out, the answer is yes.
+02:10 And that's why document databases are awesome.
+02:12 It's not just some nested blob stored in
+02:15 the original record,
+02:16 you can, as part of the query language
+02:18 and part of indexes, traverse these hierarchies
+02:21 in very, very rich and powerful ways.
+02:23 We don't lose very much query capability
+02:26 just by putting lectures in this one record.
+02:29 So this is really neat,
+02:30 and this is sort of the foundational,
+02:32 most important take away from document databases.
+02:35 We store them in these flexible JSON type of objects,
+02:38 and we can nest additional things like lists of numbers,
+02:43 or even subdocuments, as we have in this case.

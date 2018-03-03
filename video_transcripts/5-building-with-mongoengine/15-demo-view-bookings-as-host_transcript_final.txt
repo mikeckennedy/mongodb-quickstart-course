@@ -1,0 +1,120 @@
+00:01 We just have one function left to write
+00:04 for viewing the bookings as a host.
+00:07 What bookings, available booking dates in your cages,
+00:10 have been booked?
+00:11 And then we'll be done with this application.
+00:13 So this require account stuff, paste that,
+00:16 that's the same, nothing special there.
+00:19 Now we want to get the cages for the current user.
+00:22 Well guess what?
+00:23 We've already written that.
+00:25 "find_cages_for_user(state.active_account)"
+00:28 That's cool, so that was already done
+00:30 at some point along the way.
+00:32 And then what we need to do is we want to get
+00:35 the bookings and we want actually a flat list of
+00:38 these are all the available slots that
+00:40 people have booked across all the cages.
+00:44 All right, so what we're going to do is
+00:47 something called bookings, like this,
+00:48 a list comprehension.
+00:50 And we're going to use sort of a dual comprehension
+00:52 to flatten it.
+00:53 So I'm going to put something here, one or two things,
+00:57 I'll say what those are in a minute.
+00:59 So we want to say "for c in cages"
+01:02 And then for each cage we want to say
+01:05 "for b in c.bookings"
+01:08 Now we don't want all of them, right?
+01:10 There's already a way to see that kind of stuff.
+01:12 But what we want is the ones that have been booked.
+01:15 We know they're booked if the booked time
+01:17 or the booked date was set.
+01:19 Let's say "if b.booked_date is not None"
+01:24 What do we want to get back here?
+01:25 We want to get the cage and the booking.
+01:27 So we're going to get a flat list of all the bookings
+01:30 and along with it we're going to carry along
+01:32 its cage that it came from.
+01:35 So that's pretty straightforward.
+01:36 And then, that's this part, getting them as a flat list.
+01:40 And then the last thing to do is just print them out
+01:42 and that's a lot of typing for not a lot of value.
+01:45 So let's paste that over.
+01:48 We'll import date time,
+01:51 and we're going to, as we loop over them, we're going to
+01:54 unpack that
+01:55 So the cb here gets unpacked into the cb right there
+01:59 and we'll say for this cage, it was booked on this date
+02:02 by so and so.
+02:04 All right, looks like this is going to work.
+02:05 I have a lot of faith in it.
+02:06 Let's give it a try.
+02:08 We'll come over here, we're going to be host,
+02:10 we're going to log in as me.
+02:14 And, are you ready?
+02:15 Moment of truth, view your bookings.
+02:18 No, there's no duration and days.
+02:21 Ah, so where did this duration and days go?
+02:25 So this is the booking.
+02:26 Let's look at the booking real quick here.
+02:28 It has a check-in and check-out date.
+02:30 Let's add this duration in days.
+02:33 Now if we add it as an actual thing that MongoEngine saves,
+02:37 that won't be so great because it's going
+02:39 to have duplicate data.
+02:41 Check-in, check-out, and days, could get
+02:43 out of sync.
+02:43 So what we're going to do is we're going to add a property.
+02:46 So we'll have a property called "duration_in_days"
+02:52 So close, days.
+02:54 That the same, yes.
+02:55 Duration in days.
+02:57 So down here we just need to use the time delta
+03:00 to figure out what that is.
+03:01 So we'll say "dt=self.check_out_date - self.check_in_date"
+03:04 and will return
+03:08 DT dot days.
+03:09 All right, let's try to run this again.
+03:13 Oh double ats, come on, too much help here.
+03:18 Here we go, all right.
+03:19 Come as a host, log as me, all right, ready?
+03:22 View your bookings.
+03:23 Ta-da, beautiful.
+03:25 And you can see our property is working just right there.
+03:29 So five days and 10 days.
+03:31 Now remember when we actually checked,
+03:34 we said we were going to book it?
+03:36 We could book it for a sub-set of time,
+03:38 we just don't store the data for how long
+03:40 the user said versus how long the time slot was.
+03:43 So they kind of get that whole slot,
+03:45 and that slot is worth five days,
+03:47 and 10 days in duration.
+03:49 But given the data that we're keeping,
+03:51 this is working totally well.
+03:54 So I think we've done everything.
+03:55 We can create a count, log in,
+03:57 we can list our cages.
+04:00 We can register a cage, which we already did.
+04:03 We can update the availability which is
+04:05 how we got these slots.
+04:06 We can view our bookings, which we just wrote.
+04:08 And we can even get little help
+04:10 and go back to the main menu.
+04:12 And we can check out the guests, just one
+04:14 more time around.
+04:15 Again, create log in, same thing.
+04:18 It says book a cage, that's reserve a cage
+04:21 for your snake.
+04:22 We saw that we can add snakes.
+04:24 Oh, I got to log in as Sarah, she's the one with snakes.
+04:29 She has those snakes there.
+04:30 She can view her bookings from the perspective
+04:33 of her snake, not from the available slots,
+04:36 things like that.
+04:37 She only sees her bookings, not all the
+04:39 bookings across everything.
+04:41 And we can go back to the main menu,
+04:42 or 'cause we're done, we can say goodbye
+04:45 to Snakebnb

@@ -1,0 +1,19 @@
+00:00 Now, sometimes you don't want a quality in your matches.
+00:03 You want some kind of operator like greater than
+00:05 or less than or in or things like that.
+00:09 So here you can see, we're going to the cage
+00:11 and we're finding all the cages
+00:13 where the square meters is at least the minimum size.
+00:16 So just like with subdocuments, we use the double underscore
+00:19 and the operator name, GTE, here
+00:22 to actually do this query.
+00:24 There's a bunch of dollar operators.
+00:25 You can find them in the MongoDB documentation,
+00:27 and you apply all of them in this way.
+00:31 Now, the other thing that we're looking at here
+00:32 that we didn't do in our app is count.
+00:35 So if we want to know how many cages there were,
+00:37 we could say do the query.count,
+00:39 and it'll just do a count in the database
+00:41 rather than pull all the objects back
+00:44 where you do a length of it or something like that.

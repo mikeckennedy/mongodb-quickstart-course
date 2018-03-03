@@ -1,0 +1,86 @@
+00:01 So before we finish the host side,
+00:03 where you actually can see your bookings
+00:05 and things like that,
+00:06 that turns out to be one of the most complex
+00:08 types of queries we're doing in this entire application.
+00:12 I want to make sure that you can book some stuff,
+00:14 you can see it so the data comes out when we write it.
+00:16 That'll make a lot more sense.
+00:17 So let's take a moment and focus
+00:18 on the guest side of the things.
+00:21 Let people come in, log in, create an account,
+00:24 register their snakes and so on.
+00:26 So if we go up to the top
+00:27 to our little switch action thing here,
+00:30 notice that I'm using the create and login from host,
+00:33 there's no reason to write that code twice,
+00:35 we'll just use that one.
+00:36 Now the thing I want to focus on for a moment is
+00:38 adding a snake and viewing your snake.
+00:40 Now this is super, super similar
+00:42 to what we already did so let's go ahead
+00:44 and just talk through this real quick
+00:46 instead of write it from scratch.
+00:47 So just like before, we have to have an account,
+00:50 ask a few basic questions like what is your snake's name,
+00:53 let them cancel by hitting nothing in the first one,
+00:55 get the information about the snake
+00:57 and then we call the function "add snake"
+00:59 and you know, you could see this is very, very similar
+01:02 so we're going to get the owner,
+01:03 get the owner back and maybe it makes more sense
+01:06 because we've been writing others like this,
+01:07 to code like this.
+01:09 We're going to create the snake and save it,
+01:10 but remember the relationship between snake and owners
+01:13 is managed by the snake IDs inside of the owners,
+01:17 so we're going to go get a fresh copy of the owner
+01:18 from the database,
+01:20 update that, and save it.
+01:22 Then we'll go back to the snake that we just created.
+01:25 Also, we'll call a quick reload account
+01:27 to make sure the snake ID,
+01:28 for some reason if they get reused real quick,
+01:29 are in the active in memory account.
+01:32 So that's all it means to create a snake,
+01:35 just like creating a cage was.
+01:38 So everything's exactly the same there.
+01:40 And then to view your snakes,
+01:42 we just write the function,
+01:43 get me the snakes for the user,
+01:45 and we loop over them.
+01:47 That again, is very much like the cages,
+01:50 we get the owner, in this case just to be sure
+01:53 that we have the fresh set of IDs there,
+01:56 and then we do the ID in "owner.snake_ids"
+01:59 and we can call to all function,
+02:00 and then convert it to a list.
+02:01 I suppose we could probably skip this,
+02:03 but either way, this is all good.
+02:05 So this gives us our snakes,
+02:07 and we're going to list it out.
+02:08 Let's go ahead and just run that to make sure
+02:10 this is all working here.
+02:11 This time, we're going to be a guest.
+02:13 And let's go ahead and log in
+02:14 and this time I want to log in as Sarah.
+02:16 So Sarah's going to be my guest,
+02:18 and Michael is going to be the person with the cages.
+02:21 Login, so we're logging in as Sarah.
+02:24 And let's say I'd like to view my snakes.
+02:27 Hmm, you have zero snakes.
+02:29 Okay, let's add a snake.
+02:31 They'll have Slither,
+02:33 and Slither is 1.2 meters long,
+02:36 this is a large gardener,
+02:39 and no those are not venomous,
+02:40 so we've created Slither.
+02:42 And let's add one more snake.
+02:43 This is going to be Bully,
+02:46 and Bully is .5, .4 meters let's say,
+02:49 this is a bull snake.
+02:52 Now if we say view your snakes,
+02:55 there's your two snakes.
+02:56 Okay, so our guest side of registering a snake
+02:59 so that we can book it into a cage,
+03:01 and viewing it, that kind of stuff, is all finished.

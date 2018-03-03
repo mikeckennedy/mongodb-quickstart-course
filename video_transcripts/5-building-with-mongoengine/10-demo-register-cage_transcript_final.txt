@@ -1,0 +1,208 @@
+00:00 Next thing we need to do as the host
+00:03 is to be able to register our cage so that
+00:05 people can view it and maybe book it.
+00:07 That'd be great, right?
+00:08 So, let's go over here and work with that.
+00:11 Now, the cage has to be associated with an owner
+00:14 through this software key relationship in MongoDB.
+00:18 We're going to require an account,
+00:19 and that's going to look like just an error message.
+00:25 We'll just say if there's no account,
+00:27 you must log in first to register a cage.
+00:29 Alright, so now we have the account
+00:31 and we're going to use that as part of it.
+00:33 Let's go ahead and figure out how many square meters
+00:36 this is going to be.
+00:38 We'll say "meters = " something like this.
+00:47 You might want to just directly convert that into a float.
+00:50 But I found as I was interacting with this application
+00:52 I'd accidentally go to register a cage
+00:55 and I meant to list them.
+00:56 You want some kind of way to cancel out,
+00:57 so let's just suppose if they don't enter anything,
+00:59 they just hit enter, it kind of short circuits everything.
+01:02 We'll say "if not" something like this,
+01:07 so if they don't enter anything, we'll just bail out.
+01:09 Otherwise we'll just say, float of meters,
+01:13 so convert it from a string to a float.
+01:15 We're not doing the error handling on this.
+01:17 You guys should probably add that, but we can just do this.
+01:20 And we have to ask a bunch of other questions.
+01:22 Is it carpeted, does it have toys?
+01:24 Thing like that.
+01:25 Let me just copy that over .
+01:29 This is just user input stuff, right?
+01:32 And then, we want to go down
+01:34 and we want to actually register the cage.
+01:37 Again, we want to do this at our data layer,
+01:39 not here in our application code,
+01:41 so we'll say "svc.register_cage()" and again,
+01:44 that doesn't exist, but it's going to in a second.
+01:47 We are going to pass the account.
+01:52 We'll pass the active account here,
+01:54 we'll pass the name of the cage,
+01:57 we'll pass whether or not it allows dangerous,
+02:00 just all of these items.
+02:02 Whether or not it has toys,
+02:04 whether it's carpeted, and the meters.
+02:10 Okay, so we're going to go and call this function which,
+02:13 obviously, doesn't exist yet,
+02:15 but PyCharm will write it for us.
+02:17 Thank you, PyCharm.
+02:19 Here we can say this is an owner,
+02:21 here's the name of the string, and so on.
+02:24 There we go.
+02:25 Let's say this is going to return a cage
+02:28 which we have to import at the top.
+02:29 Again, thank you PyCharm.
+02:31 This is very, very similar to the create account.
+02:33 We're just going to create a cage and save it.
+02:39 We've set all the properties and we'll call "cage.save()"
+02:42 and that's going to store it in the database.
+02:45 Now, we want to, remember if we look over at our owners,
+02:49 it has cage IDs to manage the relationships.
+02:53 The order in which we do this is super important.
+02:57 Now, we need to be a little bit careful
+03:00 with this account here.
+03:02 We want to make sure that we're getting the latest
+03:05 account from the database, so we'll do something like this.
+03:08 We'll say "account = find_account_by_email"
+03:14 this "active_account.email"
+03:17 That makes sure we don't have any stale data.
+03:19 Then we're going to go "account.cage_ids"
+03:24 This is a list, so we can append to the cage.ID.
+03:28 It's super important, the order here.
+03:31 We must call save so that this is an actual generated value.
+03:36 It's just none beforehand, so we want to make sure
+03:38 that's generated in the database
+03:40 and then we can return the cage.
+03:42 So, that warning up there goes away
+03:45 because we are returning the cage.
+03:49 The other thing that we need to do is,
+03:52 this has changed the account,
+03:54 but we haven't pushed those changes back to the database.
+04:00 Alright, so our registered cage seems like it's working.
+04:03 Let's go over here, and let's do one more thing.
+04:06 This active account needs to have that data adjusted as well
+04:11 so let's go over here to state, and has a reload account.
+04:15 That's not written yet, let's do that.
+04:18 This is super easy to do.
+04:19 All we have to do is go to the database and pull it back
+04:23 so we have this active account global variable
+04:25 and we can come over here and say import the service
+04:30 and here we're going to say "find_account_by_email"
+04:32 "(active_account.email)", alright?
+04:35 That's all we've got to do to reload it.
+04:37 So, this'll make sure that it can work
+04:40 with our "state.active_account"
+04:41 It's the fresh one that just got its data changed down here.
+04:46 Let's do one more thing before we carry on.
+04:48 Let's go ahead and implement register cage here,
+04:52 and let's spell suppress correctly.
+04:54 Let's add the ability to list our cages
+04:57 so that we can test that this actually worked.
+04:59 Let's also do a success message,
+05:02 "Registered new cage with id"
+05:09 Make that an F string, actually.
+05:12 "cage.ID" so we've got to store that up here.
+05:19 Excellent, so now we've got our cage
+05:20 and we'll see that come out, but let's go ahead
+05:22 and we're going to require an account again,
+05:24 which is the same info up here.
+05:31 And all we've got to do is get the cages.
+05:33 So, let's write like this.
+05:36 Let's say, "cages = svc.find_cages_for_user"
+05:44 Right, got to write that function.
+05:46 There we go, creates an account.
+05:49 Let's not call it active account, let's just say account
+05:52 and that is an owner, and it returns a cage.
+05:58 Actually, it's not a cage, what does it return?
+05:59 It returns a list of cages, so we've got to go
+06:01 to the typing module here, typing, and new cage.
+06:06 Okay, perfect.
+06:07 What we're going to do is, we already have the owner,
+06:10 and because of our refresh account stuff, it should be fresh
+06:14 so we'll have cage IDs, and we should have this
+06:17 "account.cage_ids" right there that we can use.
+06:21 Now, how do we query for this particular thing?
+06:25 We're going to do something you haven't seen yet.
+06:27 We're going to come to the cage, and again,
+06:29 we're going to go to this objects and I'm going to do the query,
+06:31 but instead of saying, remember before we had "email = "
+06:34 and that did the query against MongoDB for testing quality?
+06:38 We have something different we need to do.
+06:40 We want to go to the ID of the cage,
+06:42 and we don't want to just say, well, it's equal to,
+06:45 it's not going to be equal to the list.
+06:47 We can't say not cage IDs, because one is an object ID
+06:51 and one is a list of object IDs,
+06:54 so we have to use a special operator,
+06:56 and MongoDB has all these simple dollar operators.
+07:00 $set, $in, $not, $or,
+07:04 these types of things.
+07:07 And the way that we work with those in MongoEngine
+07:10 is we use a double underscore to say
+07:12 we're applying this to the ID but then there's this other
+07:15 thing that we're doing and we're going to say "in"
+07:18 This query right here, do a little cleanup,
+07:21 this query says go to the cage and find all the cages
+07:24 whose ID is in this list of IDs.
+07:26 Now, we'll have "cages = " this is a query
+07:32 but we want to execute the query and sort of snapshot it
+07:35 for our app so it'll return cages.
+07:41 And that should make our app totally happy.
+07:44 That little warning, up and away.
+07:46 Okay, great, so we've written this function
+07:48 and we've used the "in" operator,
+07:50 the double underscore, to access it.
+07:52 Here's our cages, we just need to print them out.
+07:54 Or see in cages...
+07:58 Let's make these F strings, and we'll put them here
+08:00 and we'll say "c." whatever we want here.
+08:02 We want name...
+08:06 Let's also print out something like this.
+08:10 You have however many lengths of cages you have
+08:13 and then we'll print those off, okay?
+08:15 Let's try to test these two things that we've written.
+08:19 For host, we first want to register a cage.
+08:22 Actually, let's try to list our cages.
+08:30 Login "michael@talkpython.fm." Let's list our cages
+08:32 You have zero cages, great, so let's register a cage.
+08:37 Now we're logged in it'll let us.
+08:39 It's 2.2 square meters.
+08:41 Yes, it's carpeted.
+08:42 Yes, it has toys.
+08:43 No, it has no venomous.
+08:45 This'll be Bully's Cage.
+08:49 It looks like we haven't set the price, hmm.
+08:52 We've forgotten something, haven't we?
+08:53 Okay, good thing we tested that here.
+08:59 The price, and this will be, how much are you charging?
+09:03 Alright, let's go ahead.
+09:04 Price here, price, okay.
+09:09 That was kind of annoying that that crashed,
+09:12 but it's also cool.
+09:13 Why is that cool?
+09:14 Because if we said the cage must have a price and it didn't,
+09:17 if that was regular MongoDB, that would've just let
+09:19 that happen, but because it was MongoEngine, it did not.
+09:22 Alright, let's do this again.
+09:31 List my cages.
+09:33 Whoops, list my cages.
+09:34 We have no cages, let's register a cage and do this again.
+09:42 How much are we charging?
+09:44 We're charging $29 a night.
+09:46 This is one fancy cage, folks.
+09:48 Boom, we've registered a new cage.
+09:50 Now, let's list your cages.
+09:52 Ooh, we have "1 cages."
+09:54 Maybe a plurality thing there, but Bully's cage is out.
+09:57 Let's register one more cage.
+10:00 This is a huge cage.
+10:02 It's carpeted, has all the toys,
+10:03 and this one's even for venomous snakes.
+10:05 This would be the "Large boa cage," who knows.
+10:11 And this is $39.
+10:12 Now if we look at our cages, we have two cages.
+10:16 Beautiful, so it looks like our registering
+10:18 and our listing cages is working great.

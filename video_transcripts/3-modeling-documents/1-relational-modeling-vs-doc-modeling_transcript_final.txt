@@ -1,0 +1,94 @@
+00:00 Are you ready to model some real applications
+00:03 in MongoDB using documents?
+00:05 It's time to get our hands dirty
+00:06 and to really start building something.
+00:07 In this chapter, we're going to go through
+00:10 our SnakeBNB application, come up with the entities,
+00:13 the classes and tables, or collections
+00:16 as they're called in MongoDB, and model them out.
+00:18 So we're going to first look at how this modeling
+00:22 and document databases compares to traditional
+00:24 third normal form modeling and relational databases.
+00:27 We're going to use a pretty simple example
+00:28 but I think you'll get the idea,
+00:30 and you'll see it much more in action
+00:33 when we build the real app.
+00:34 Let's take this simple bookstore model here.
+00:37 We have books, they have a bunch of properties.
+00:39 We have people who publish those books named publishers,
+00:41 they have a name, when they were founded,
+00:43 and you can navigate this foreign key relationship
+00:46 from publisher over to the publisher ID on the book.
+00:49 Now, we also have a user, and a user might rate a book.
+00:53 So we have users and we have ratings
+00:55 and we have a foreign key relationship between them.
+00:57 And then out from rating over to book
+00:59 we have a one-to-many relationship there, right?
+01:01 A book can have many ratings.
+01:03 We have a couple of foreign key relationships
+01:05 going on in this place.
+01:07 Now let me tell you, in a real application,
+01:08 there'd be many more little tables
+01:11 with extra information like this.
+01:12 Like ratings about books and so on, and
+01:15 let's say reviews for example; things like that.
+01:17 Maybe even related items that we've pre-computed
+01:20 from some sort of machine learning,
+01:22 but we want to store that in the database.
+01:24 So imagine this model here having
+01:26 15 tables with relationships
+01:29 across all the various pieces back and forth.
+01:31 I just want to keep it simple.
+01:32 Fits on a screen, you're not going to go crazy with it.
+01:34 So, how would we model this in MongoDB?
+01:37 How would we model this using documents?
+01:39 Well, you would see that it's somewhat simpler.
+01:41 The more craziness that we had in a relational model,
+01:44 the sort of more contrast you will see here.
+01:46 So we still have our publisher and they have their ID
+01:48 and when they were founded.
+01:49 We have our user in the same columns,
+01:51 or pieces of information there as well.
+01:53 Same as book.
+01:54 But now our ratings, we've decided,
+01:56 when we get a book, most of the time
+01:58 we actually want to know the rating.
+01:59 We want to say this is a 3.4 star book, or it has 72 ratings.
+02:04 Even in a list, we want to show that stuff.
+02:06 So we're pretty sure we want to have
+02:08 these ratings always with the books.
+02:10 Why put 'em in a separate table?
+02:12 Let's embed them.
+02:12 Now we still have some relationships
+02:14 like we had in the relational model.
+02:16 For example, we have our publisher ID on books
+02:18 and that links over to publisher.
+02:20 Now, this is what, in MongoDB, I refer to as
+02:22 a soft foreign key constraint.
+02:24 If it was a relationship between books and publisher,
+02:27 it's the publisher ID set to the ID of the publisher.
+02:29 But the database itself doesn't enforce this, alright?
+02:32 You need to be a little more careful in your app
+02:34 and we'll see how we do that when we get to the code.
+02:36 But, as I was saying about ratings,
+02:37 these we're not going to put in a separate collection.
+02:40 In fact, we're going to store those inside our books,
+02:43 so we can embed these objects and arrays
+02:46 of either straight values like numbers or strings,
+02:49 or actual sub-documents like our ratings here.
+02:52 So we might have rating one, two, three, and so on.
+02:54 It's actually part of the record of the book.
+02:56 So when we get the book record back,
+02:57 we already have the ratings, things like that.
+03:00 So again, we can think of these ratings
+03:02 being embedded within books as a pre-computed join.
+03:06 There's a slight bit of overhead
+03:08 if you actually wanted the book without the ratings.
+03:10 I mean, you're just going to get them back and ignore them
+03:12 most of the time anyway, if that was the case.
+03:14 Most of the time you do want the ratings.
+03:16 this is a huge speed up.
+03:18 And like I said, imagine there were 15 tables before
+03:20 and five of them could be collapsed into the books.
+03:23 Now you have a five-way join going down
+03:24 to a single primary key query; that'd be amazing.

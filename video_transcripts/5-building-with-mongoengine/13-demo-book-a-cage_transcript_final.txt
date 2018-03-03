@@ -1,0 +1,338 @@
+00:00 So, we have cages.
+00:02 We have available dates in cages, and we have snakes.
+00:05 Time to book a snake into a cage
+00:07 on one of those available dates.
+00:08 This turns out to be one of the more complicated things
+00:10 we're going to do in this application.
+00:12 And there's a lot of input, and juggling, and stuff.
+00:15 So I'm going to paste a few things here
+00:17 just about asking questions about the dates and stuff.
+00:21 And then we're going to go and write
+00:22 the database queries from scratch.
+00:25 So let's start here.
+00:26 We're going to start by making sure you have an account.
+00:29 And then we're going to get all the snakes
+00:31 and make sure you have a snake,
+00:32 because having an account is not enough.
+00:34 You also have to have a snake you can put into there.
+00:36 We're going to ask some questions
+00:38 about when do you want to do this.
+00:39 We're going to use Python "dateutil" to parse that.
+00:43 So just like before, we're going to do a little error handling
+00:45 to make sure you're not trying to book some sort of
+00:48 reverse thing like I check out before I check in,
+00:53 something like this, right?
+00:54 Okay, so then the next thing we need to do
+00:56 is find out the available cages.
+00:58 And this is where it gets interesting.
+01:00 So we're going to write a function called get available cages.
+01:02 We're going to take the check in, the check out, and the snake.
+01:06 We also need to figure out which snake you want.
+01:09 So first of all, let's do an enumerate,
+01:11 lift out your snakes,
+01:13 and we'll say snake one this, snake two is not,
+01:16 and you'll pick the snake, okay.
+01:18 So, take our snakes, pick that, got our time
+01:22 and then we're going to go to the database
+01:23 and find particular cage that we can work with.
+01:28 Now, that's not all there is to it.
+01:29 So this is just going to get us the cages
+01:31 that could be booked, and then we have to ask,
+01:34 that's this little section right here,
+01:35 and we have to let the user pick a cage,
+01:37 and we'll find the underlying booking behind it.
+01:40 So let's write this function.
+01:41 So this can be a date-time and a snake.
+01:51 You, of course, don't have to put the tie pins.
+01:53 But I find at the data access layer,
+01:56 it's really helpful, maybe through,
+01:58 you can see it through the rest of the application,
+01:59 we're not doing this.
+02:00 But at the data access layer,
+02:02 I find it really helpful to say
+02:03 these are the things that go in,
+02:04 these are the things that go out.
+02:05 This is how we're working with the database.
+02:08 Okay, so here's where we get down to business.
+02:11 We're going to come in here. Let me move this up for you.
+02:13 So we need to do a couple of things.
+02:15 We need to find all the cages that have bookings,
+02:19 that are not booked between this time and that time.
+02:23 All right?
+02:24 And we need the snake information,
+02:25 because not all cages allow poisonous snakes,
+02:29 and they don't all necessarily fit.
+02:31 If I have a 20 foot snake, I can't put into a two foot cage.
+02:35 So let's just do a little quick rule of thumb to say,
+02:40 if your snake is four times longer or more than the cage,
+02:45 then the snake can't go into it, right?
+02:46 Snakes can curl up, but they can only curl up so much.
+02:48 So we'll say something like, the minimum size of the cage
+02:51 that we're going to get is "snake.length / 4"
+02:55 This is going to be part of our query.
+02:58 The date's going to be part of the query,
+02:59 and whether it's venomous or not.
+03:02 We're going to do a few interesting things here.
+03:03 This is definitely part of the more complicated queries.
+03:06 So I'm going to go to the cage, and we'll say objects.
+03:08 And when you have these compact queries,
+03:11 I find it's nice to spread this across multiple lines.
+03:13 Well, I'll say ".filter"
+03:15 And on multiple filters the are effectively and
+03:18 I'll say square meters.
+03:21 Now, I'd like to say, let's say
+03:23 "=min_size" or greater, right?
+03:25 Just like we saw with the operators about in,
+03:28 there's one for greater than or equal.
+03:30 And we can say, the square meters
+03:31 are greater than or equal to this minimum size.
+03:34 But that's not the only thing that we need.
+03:36 We also need to go and do another pretty wild thing.
+03:39 We want to go to the bookings.
+03:41 Now, remember, refresh, over here we have a cage.
+03:44 The cage has a bookings field.
+03:46 We go to the definition for bookings.
+03:48 Bookings have a check-in date and a check-out date.
+03:51 We want to work with that.
+03:53 How do we do that in MongoEngine?
+03:56 We come over here and we can traverse
+03:57 that hierarchy with underscores as well.
+03:59 So we can say bookings.check_in_date,
+04:02 and we want to have the check in date
+04:06 before or equal to the check in that those passed, right?
+04:10 So the time you can check in has to precede
+04:13 the time this person is checking in.
+04:16 And then we'll do something similar for check-out.
+04:22 Okay, so this is part of the query.
+04:24 Now, if the snake is poisonous,
+04:27 we also want to say that they allow poisonous snakes.
+04:30 So we'll say this, we'll say if "snake.is_venomous"
+04:33 we need to augment this query.
+04:35 So we can do that because it hasn't executed yet.
+04:38 It's like the potential to be executed.
+04:40 So we can say "query = query.filter"
+04:43 and is thing "allow_dangerous_snakes"
+04:47 That's what we want to work with.
+04:51 "=True"
+04:52 Because non-dangerous ones can stay
+04:54 in cages that will either allow
+04:56 or not allow dangerous snakes.
+04:57 But if it's venomous, we have to
+04:59 have this additional criteria.
+05:02 And maybe we want to have some kind of order by,
+05:04 like we'd like to show them the cheaper ones.
+05:06 So let's go like this.
+05:07 We'll say "cages = "
+05:09 and we'll finalize the query like this.
+05:11 We'll say "query.order_by"
+05:16 Now, you don't do this sort of default
+05:19 of this named parameter type thing for this.
+05:22 We want to order by price.
+05:24 And default is ascending, so cheapest ones first,
+05:27 and maybe you want to see the biggest ones first as well.
+05:29 So we'll say square meters, like this.
+05:33 So we're going to say, first order by price, lowest to highest,
+05:37 and then show us, if the price is the same,
+05:40 show us the largest ones at that price level
+05:44 down to the smallest ones.
+05:46 Excellent.
+05:47 So this is pretty much working.
+05:50 It turns out it looks like it's going to completely work,
+05:53 but it turns out that there's a challenge
+05:55 we're going to run into.
+05:56 And in PyMongo this is straightforward to solve,
+05:59 although, you have to use a lot of operators,
+06:00 these dollar operators to make it work.
+06:02 But I haven't found a good way in MongoEngine.
+06:04 And so I still find the on balance
+06:06 that work with MongoEngine, even for this query, is better.
+06:09 But here's the problem.
+06:10 What this query is asking.
+06:11 You're probably thinking it looks right.
+06:14 It takes a moment to realize
+06:16 the challenge we're hitting here.
+06:18 What this query says is, go to the cage,
+06:21 and find me the cage where the square meter is
+06:22 at least minimum size.
+06:24 That's totally fine, that works perfectly.
+06:26 And it says, show me where there's a booking
+06:29 query within check out.
+06:30 And there's a booking, oops, this should be greater than.
+06:36 That was almost an error.
+06:37 So where there's a check-out date passed,
+06:41 equal to or passed where I'm willing
+06:42 to check-out for my snake.
+06:45 The problem is if I have, let's say,
+06:47 20 bookings in this cage, right,
+06:51 I probably want to check one more thing,
+06:54 but I can just check it.
+06:55 Damn, we're going to have to do one more bit at the bottom.
+06:57 But the problem is, what if, there's two bookings?
+07:03 One that starts way in the past,
+07:05 but the check-out is one day later.
+07:08 And then there's another one where
+07:10 the check-out date is way in the future,
+07:12 but you can only check-in one day before.
+07:14 And these are not the same bookings, right?
+07:16 There's a booking where the check-in date
+07:17 is before the check-in,
+07:18 and there's a booking where the check-out date
+07:20 is after the check-out,
+07:21 but those are not the same.
+07:23 You need to say, there's an individual booking,
+07:26 not like some set of bookings where one matches one clause,
+07:31 and the other matches the other.
+07:32 So the way you do that in Mongo,
+07:35 is you say, dollar element match.
+07:37 I think it's "$elemmatch"
+07:39 So element match is the description of the thing.
+07:43 So you can say, it must have both of these.
+07:46 But I don't see how to do that in MongoEngine.
+07:48 It seems like it should be possible,
+07:49 it certainly is possible for equality.
+07:53 But for these operators plus element match,
+07:56 didn't seem to work for me.
+07:57 Anyway, you figure it out, feel free to use element match.
+08:00 I didn't, so I've got to add one more line here.
+08:04 And I'm just going to copy that over real quick,
+08:06 and we'll talk about it.
+08:07 So what we're going to do is we're going to say,
+08:09 let's go and actually, these are the cages we care about.
+08:13 I'm going to iterate over the query, which executes it here.
+08:16 And remember, the cage,
+08:18 each cage contains a number of bookings.
+08:19 For each booking, I want to check that both
+08:23 the check-in is before and the check-in is after,
+08:26 and that the snake ID is none.
+08:29 So it's not already booked during that time.
+08:32 Though if it's both available,
+08:34 and the check-in check-out date matches,
+08:38 then we can make that part of our final cage there,
+08:41 the final cage list.
+08:42 Okay, so, and it says it returns this,
+08:45 but actually, what it returns is a list of cages.
+08:49 There we go.
+08:50 Okay, so that's what we got to do.
+08:52 If I could get element match to work with
+08:54 greater than less than in MongoEngine,
+08:56 this would not be necessary.
+08:58 You could just straight up run that query.
+09:01 But anyway, it's not a huge deal.
+09:03 Remember, this set is already filtered down to where,
+09:06 significantly, right, where the check-in and check-outs
+09:09 do match, it just happens to be
+09:11 maybe one more thing is missing there.
+09:13 Okay, so we're getting available dates.
+09:15 So let's come back to our guest here.
+09:17 We've got our available cages.
+09:19 Now, we just have to like show them to the user,
+09:22 and let them pick it.
+09:25 All right, so this just takes some
+09:26 pre-written code for this.
+09:27 There are a certain number of cages available,
+09:29 and we're going to enumerate over them.
+09:31 And don't need the average radian right now.
+09:42 Do it like this.
+09:43 We're just going to print out the name, the square meters,
+09:44 whether it's carpeted, and whether or not it has toys.
+09:47 We want that to be true-false.
+09:48 So let's put that "yes and no," more friendly, right?
+09:51 And if there's no cages, "sorry, there's no cages."
+09:54 But if there are, we'll ask you which one,
+09:56 and we'll pick that out in a zero based, of course.
+10:00 And finally, the final thing to do is going to be book a cage.
+10:03 And then actually, we'll just give out
+10:05 this nice little success message saying,
+10:08 "Hey, you booked it for this time."
+10:10 So last thing to do with this booking a cage
+10:12 is to actually book it.
+10:17 So let's go over here.
+10:18 Put my term, write it one more time here.
+10:21 And now, what we're going to do is
+10:23 we're going to loop over that cages booking.
+10:27 So the way it works is, they've selected a cage.
+10:31 They haven't selected the individual booking.
+10:33 So we just have to go one more time over the bookings,
+10:35 and go, let's find a booking within this cage,
+10:38 which we know exists because it's in the list,
+10:40 and let's assign it to the snake.
+10:43 So we'll do something like this.
+10:44 We'll come down here, and we'll start up by
+10:46 sending this little booking to nothing
+10:49 just in case for some odd reason we don't find one.
+10:52 I'm going to go through and, again,
+10:53 do a similar test as we did right there, right?
+10:57 We got to find the available booking within the cage.
+10:59 We know it exists, but we got to find it.
+11:01 Then down here we're going to just set a few things.
+11:04 Say the "booking.guest"
+11:08 and get a little telesense auto-completion if you want.
+11:14 Set the guest owner ID.
+11:18 I guess we probably got to pass the account as well.
+11:23 We'll say "account.ID"
+11:27 Say booking dot
+11:34 Set the booked date.
+11:36 It was booked right now, regardless of when the booking was.
+11:40 Then we also need to set the snake.
+11:47 There we go.
+11:48 And then we got to go back and save it,
+11:51 but remember, we don't call save there.
+11:53 We call a "cage.save()"
+11:55 Okay, excellent.
+11:56 Now, I think it just believes that's a misspelling,
+11:59 but I'm going to say it's not.
+12:01 All right, so that should let us book a cage.
+12:04 That was a tough one, right?
+12:05 So pretty interesting query.
+12:08 We're using the operators, greater than less than.
+12:11 We're traversing the hierarchy.
+12:13 And like I said, that we're sort of effectively
+12:16 in memory applying this element match.
+12:18 Element match works in MongoEngine,
+12:20 but I couldn't get it to work with both
+12:22 element match and the operators.
+12:24 So anyway, this will be fine.
+12:27 Come down here and given a cage, we'll pull out the booking.
+12:31 We probably could structure it slightly differently,
+12:33 so we could skip this step and somehow
+12:35 capture the booking directly, but this is fine.
+12:37 It works plenty fast forwarded.
+12:39 Set the, hey you booked it, values of the booking,
+12:43 and call save.
+12:44 All right, I think it's time for us to test our book a cage.
+12:49 And I notice I almost forgot to add this here,
+12:52 "state.active_account" I added it below.
+12:55 So let's go ahead and run this.
+12:57 And we'll come in here, and we'll be, oops, be a guest.
+13:01 And let's go ahead and log in.
+13:06 And let's see our snakes.
+13:08 So we have these two snakes, neither of them are venomous.
+13:10 Let's book a cage.
+13:12 I'm going to start by booking this.
+13:13 Now, how do I know that date?
+13:15 Cuz over here, we have two available bookings
+13:20 for the large boa cage,
+13:21 and these times one to six in January.
+13:25 So we'll go two, let's say two to four.
+13:27 It should be fine.
+13:29 This four.
+13:32 And it says which snake, remember,
+13:34 it matters the size of the cage and snake,
+13:37 as well as whether it's venomous.
+13:38 So we'll pick slither.
+13:40 And hey, look, the one cage is here.
+13:41 So let's say, all right, let's book it.
+13:44 We've successfully booked the large boa.
+13:48 All right, now we haven't written view your bookings,
+13:52 but we do have that, I believe,
+13:55 we might have that for the other one.
+13:57 Go over here as a host, and we log in as Michael.
+14:01 I think we might not have implemented this as well.
+14:04 But we can list our cages.
+14:06 Yes, there we go.
+14:07 We can see that we have two cages,
+14:10 Bully's cage and large boa.
+14:12 And look at this, somebody has booked this one,
+14:16 this slot, for the large boa cage.
+14:18 Yes, so it looks like that worked successfully
+14:21 just like we expected.

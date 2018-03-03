@@ -1,0 +1,38 @@
+00:01 We're able to create our account.
+00:02 So let's now add the ability to log in
+00:05 once we exit the application.
+00:07 So, we're over hear in the "log_into_account()"
+00:09 and the program host, this is super easy.
+00:11 We'll just have to get the email from the user,
+00:14 like this, so we'll say something to the fact of...
+00:18 So, we're going to log in, ask them what their email is
+00:19 and let's go ahead and do a "strip()" and a
+00:23 ".lower()" on this and in fact, let's always store that.
+00:26 So, go back up to our "create_account()" and do that here,
+00:29 so ".strip()" takes all the white space
+00:31 in case there's like a space or something on the end,
+00:33 and ".lower()" of course makes it lowercase.
+00:35 So, then we just need to see if the account exists.
+00:39 Well, we actually already wrote that so let's say this:
+00:43 Say the account is, the service
+00:45 not find account by, guessed it, email.
+00:49 And then we'll say we had a little error handling
+00:51 and say if not account...
+00:54 It's an error message.
+00:56 So, nothing there, and if it worked
+00:58 all we have to do is save it and maybe say,
+01:01 "You've logged in, yay!"
+01:03 So, let's say "state.active_account = account"
+01:09 and then we'll do a success message, "Logged in successfully."
+01:15 And then our little prompt will change straight away,
+01:18 so that should be good, let's try this.
+01:23 Come over here to the host, let's try to log in
+01:26 and remember, there's no real passwords we're just
+01:29 sort of playing around with accounts here.
+01:30 So, michael@talkckpython.fm.
+01:35 Boom! "Logged in successfully."
+01:37 Awesome, and you can see the prompt change.
+01:39 Let's try to log in again and I'll
+01:40 try to just use jeff@j.com.
+01:42 Nope, "Could not find an email with jeff@j.com."
+01:46 Looks like log in is working.

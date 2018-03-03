@@ -1,0 +1,11 @@
+00:00 There it is, the finish line!
+00:01 You have made it, congratulations!
+00:04 I hope you've learned a lot throughout this course.
+00:06 We really have covered a majority
+00:08 of what you need to program against MongoDB.
+00:11 So you've done it, you've crossed the line,
+00:13 now you know enough to start building applications
+00:16 based on MongoDB.
+00:17 So the big question is, what are you going to build now?
+00:20 I hope you go out and build something amazing.
+00:22 Please share it with me when you do.

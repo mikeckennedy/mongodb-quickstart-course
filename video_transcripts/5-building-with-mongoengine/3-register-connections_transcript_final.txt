@@ -1,0 +1,83 @@
+00:00 The first thing that we need to do
+00:01 to start working with MongoEngine is
+00:03 tell MongoEngine how to speak to MongoDB.
+00:06 Let's go back to our Snakebnb app we've been working on.
+00:09 And we're going to go in here to this data section.
+00:12 we're going to create a new file,
+00:14 a new Python file called mongo_setup.
+00:16 So in here, we're going to write a simple method
+00:19 that we can call from other places,
+00:20 and as you'll see in the slides that we look at later,
+00:24 for real applications that use proper connections,
+00:28 encryption, accounts, things like that,
+00:29 this can be a little more complicated,
+00:31 but it's going to start out pretty simple,
+00:32 so we'll say, "global_init()" and in here,
+00:35 we just want to call one function,
+00:37 so we're going to have to have MongoEngine here,
+00:40 so we'll import MongoEngine,
+00:41 and we'll just say, "mongoengine.register_connection()"
+00:44 and the first thing that we pass is an alias,
+00:47 so I'll be real explicit and say, "alias='core' "
+00:50 Now what is this alias thing about?
+00:51 We can have multiple connections to even multiple databases,
+00:55 or even multiple database servers registered here.
+00:58 We could have like a core data and
+01:01 say analytics for just analytics that goes to a
+01:03 separate database that maybe has tons more data
+01:06 because it's page views, and actions, and so on.
+01:08 But we might keep that separate, so we can back it up
+01:10 on a separate schedule, something like that.
+01:12 Then, we need to set the name of the database,
+01:15 and we'll set that to Snakebnb.
+01:17 Do a quick format here, and it's all good to go.
+01:20 Like I said, this gets more interesting in real connections.
+01:23 We're going to need to call this to talk to MongoDB,
+01:27 so let's go over to our little program,
+01:28 and you saw up here at the top, there was this to do,
+01:31 setup MongoEngine global values,
+01:32 and that was basically what we were doing there,
+01:35 so we need to come over here and say,
+01:36 you need to go to "data.mongo_setup"
+01:39 We'll just call it "mongo_setup"
+01:42 And this should be pretty simple,
+01:43 mongo_setup.global_init()
+01:45 Now we just need to make sure we call this once
+01:47 in our application and we need to do this
+01:49 before we actually interact with anything else,
+01:52 so let's go and apply these settings
+01:54 over to our entities as well, so we'll look at snakes first.
+01:59 Now this model is going to be mapped
+02:01 into one or more of those databases.
+02:04 Well, one among many potential databases,
+02:06 so the way that we can tell it how to work,
+02:09 MongoEngine will use a property we can add to it.
+02:12 We can say "meta = " and we give it a dictionary,
+02:14 and we can say " 'db_alias' "
+02:17 and we'll say " 'core', " here, okay?
+02:18 While we're at it let's say, " 'collection': 'snakes' "
+02:22 So even though we called it capital S snake,
+02:25 the thing in the database where these records,
+02:27 these documents are stored will be called
+02:29 snakes, plural, lowercase, and here we can tell it
+02:31 if this goes into the core database,
+02:33 unlike maybe the analytics one, or something like,
+02:36 all right, we're only going to have one in here,
+02:37 but for our example, you want to have this here,
+02:39 in case you want to add more later.
+02:41 All right, I'll go ahead and add the rest of these
+02:43 to owners and cages, but not bookings,
+02:46 because bookings is going to be nested inside here, all right,
+02:49 so we don't need to tell that how it gets stored,
+02:51 'cause it's stored alongside cage,
+02:54 triple set of cages, and no surprise, owners.
+02:57 All right, so those are our three top-level entities
+03:00 that map to our three top-level collections in MongoDB.
+03:02 Now, we've registered the connection
+03:04 by using our Mongo Setup Global,
+03:06 which should we just call a regular connection.
+03:08 Like I said, this shuouldn't get
+03:09 way more complicated in reality, and then,
+03:11 we just go and we set this meta to use the core connection
+03:14 as well as naming the actual table
+03:16 or collection it's going to go to.

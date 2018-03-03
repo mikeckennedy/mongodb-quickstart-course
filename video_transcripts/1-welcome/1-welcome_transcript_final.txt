@@ -1,0 +1,118 @@
+00:01 Hello and welcome to MongoDB Quick Start with Python.
+00:05 MongoDB is one of the most popular
+00:07 and exciting database technologies around.
+00:09 Python is one of the most popular
+00:11 and fastest growing language there is
+00:12 and these two technologies work great together
+00:15 and that's exactly what this course is about.
+00:17 We're going to quickly get started with MongoDB,
+00:20 write some code against it,
+00:22 and build some realistic applications.
+00:24 The goal with this class is to teach you MongoDB.
+00:27 We assume you know a little bit of Python
+00:29 but you'll of course pick some things up along the way
+00:31 if you don't know it already, and really,
+00:33 we want to get you going quick, hence the name, Quick Start.
+00:36 Let's get started by talking about
+00:38 what we're going to cover in this course.
+00:39 We're going to focus on three main things.
+00:41 We're going to start with why do you care about
+00:44 NoSQL and Document Databases.
+00:46 How do document databases make working with schemas easier,
+00:50 modeling data easier, as well as add performance
+00:54 and flexibility to our applications.
+00:55 We're going to talk about modeling specifically,
+00:58 'cause it is one of the things that is
+00:59 pretty challenging about document databases.
+01:02 If you come from a relational database world,
+01:04 you probably know about third normal form.
+01:06 This is a way to carefully and
+01:08 more structured way to plan out how you model your data.
+01:11 In document databases, you don't really have that.
+01:13 There's a lot more sort of flexibility
+01:16 in how you design things.
+01:18 This is great for you once you understand it
+01:20 and get really good at it, but it's challenging to know
+01:22 how to model things when you get started
+01:24 because there's so much flexibility
+01:26 and it's kind of open-ended.
+01:27 It feels a little more like art than science, in some sense.
+01:30 So we're going to focus specifically on
+01:32 techniques and trade offs, and some guidelines
+01:35 I have to come up with to help you be successful
+01:38 modeling your data with document databases such as MongoDB.
+01:42 Then we're going to start writing code for real.
+01:44 We're going to use a Mongo ODM, Object Document Mapper.
+01:49 Think of SQL Alchemy but for document databases.
+01:51 They're called MongoEngine, and we're going to use that
+01:54 to create some classes to model our data,
+01:57 and map those classes to and from MongoDB
+01:59 and use that as the foundation of our application.
+02:02 Speaking of applications,
+02:03 what are we going to build in this class?
+02:05 Well, we're going to build an AirBnB clone but for snakes.
+02:09 Okay, so we're going to build Snake BnB
+02:11 and this allows you, when you're traveling with your snake,
+02:14 your pet snake, you don't want it to have to
+02:17 live out in the car or something like that.
+02:19 You want to get it a cage that it can live in,
+02:21 a proper snake cage where it'll be happy.
+02:23 There'll be owners of cages
+02:25 who can put their cages up for rent,
+02:27 and snake owners, pet owners
+02:29 who want to travel with their pets and
+02:31 have their pet have a place to stay.
+02:33 We're going to create this sort of silly
+02:35 AirBnB knockoff clone, but we're going to model
+02:37 many of the operations you would see
+02:39 in real AirBnB on our application here
+02:42 so it's going to be pretty rich in terms of data.
+02:44 As far as tools go, well of course,
+02:45 we're going to talk about MongoDB, right.
+02:47 That's the database we're using,
+02:49 but you're also going to learn some other things
+02:50 that are pretty awesome in the course.
+02:52 We're going to talk about MongoEngine.
+02:54 This is the primary library
+02:55 we're going to use to talk to MongoDB.
+02:57 It's built upon another one that's very popular
+03:00 that has sort of the lowest level
+03:01 official way to talk to MongoDB called PyMongo,
+03:04 so you might see a little bit of
+03:05 both of those actually in the course.
+03:07 We're going to use what I think is
+03:08 the best tool for accessing MongoDB,
+03:11 something that used to be called Robomongo
+03:14 but now it's called Robo 3T,
+03:16 'cause it was acquired by a company called 3T.
+03:18 This is part command line,
+03:20 part GUI way to interact with MongoDB,
+03:23 and it's beautiful, and free open source, it's great.
+03:26 Also, we're going to use PyCharm for our Python code.
+03:29 You don't have to use PyCharm for this course,
+03:31 but you'll see me using it, and I think you'll see
+03:33 a lot of benefits as we go.
+03:36 Speaking of me, who am I anyway?
+03:37 Who is this voice that you're listening to?
+03:39 Hi, my name is Michael Kennedy.
+03:40 You can find me on Twitter at @mkennedy.
+03:43 What makes me qualified to teach this course?
+03:45 Well, first of all, I host the most popular Python podcast
+03:48 called Talk Python to Me, and I've interviewed
+03:51 many, many people, including some of the folks from MongoDB,
+03:54 the company as well as authors who've written about
+03:57 MongoDB design patterns and things like that,
+03:59 so I've had a lot of experience
+04:00 working with people from Python and MongoDB.
+04:03 I've created the Talk Python Training Company
+04:06 and written many Python courses
+04:08 and MongoDB courses there as well.
+04:10 And also, I am part of the MongoDB Masters Program.
+04:14 This is a group of about 35 external community members
+04:18 who give advice back to MongoDB,
+04:21 and I've been part of this for many years,
+04:23 worked closely with the folks inside MongoDB over the years.
+04:26 So this is what you have in store for you,
+04:28 lots of awesome MongoDB and Python.
+04:30 I hope you're excited.
+04:31 Let's get right to it.

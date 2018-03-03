@@ -1,0 +1,156 @@
+00:03 So far we've modeled our data with Python classes,
+00:05 but there was no real MongoEngine entity stuff,
+00:08 they wouldn't actually be saved or processed by MongoEngine.
+00:11 It just happens to be we kind of sketched
+00:13 them out in Python class style.
+00:15 So we're going to change that now.
+00:16 We're going to go make our standard, plain old Python classes.
+00:19 Proper MongoEngine entities.
+00:21 The snake is pretty simple.
+00:22 So let's start there.
+00:23 So in order to work with MongoEngine over here,
+00:26 I'm going to have to import it.
+00:28 Now, you might want to do
+00:30 from MongoEngine, import some things,
+00:32 but I like to be real explicit.
+00:34 These things are coming from MongoEngine,
+00:36 even in my production code.
+00:37 So this is how I'm going to do it.
+00:38 We're going to set the register date
+00:40 to a particular type of descriptor
+00:42 that comes from MongoEngine,
+00:44 and at sort of the type of level this tells MongoEngine
+00:47 what type of data, and constraints,
+00:49 and requirements go onto this field.
+00:52 However, at run time, it's going to act like,
+00:54 say date time or whatever it is.
+00:56 In this case the date time
+00:57 and species would be string and so on.
+00:58 So we'll come over and say "mongoengine.DateTimeField()"
+01:02 and we'll just go like this.
+01:03 This will tell MongoEngine to map
+01:04 that to the database as a date-time field.
+01:06 Over here, we'll say "mongoengine.StringField"
+01:09 and over here, the length,
+01:11 let's say this is in meters and that's probably decent floats.
+01:15 alright so this will be a float field.
+01:17 The name, again is string field.
+01:19 Whether it's venomous or not, that's true or false.
+01:22 It could be a number, like level of venomous.
+01:24 I don't know, but we're going to call this a boolean field
+01:27 and that's that.
+01:27 So our snake is all ready to map into MongoDB.
+01:31 MongoDB doesn't have things like required fields
+01:34 or default values or anything like that,
+01:36 but MongoEngine does.
+01:37 So let's change this to make it a little simpler
+01:39 to create a snake.
+01:40 So for example, "registered_date" is almost always just
+01:43 whenever you inserted it, right?
+01:45 So what we can do is we can come over here
+01:46 and set a default function
+01:47 that will execute any time MongoEngine inserts a new snake.
+01:50 So we're going to start with date-time.
+01:52 So the function that we want to call is the now function
+01:55 which gives us the full year, month, day,
+01:58 hour, minute, second representation of time.
+02:00 So we'll come in here, say "datetime.datetime.now"
+02:03 and be very careful not to put the parenthesis.
+02:06 You're passing the function, not the value of "now"
+02:08 That would be when the program started.
+02:10 So that can be a little tricky.
+02:11 Over here for species, let's say that you have
+02:13 to say the species.
+02:14 So we're going to say this is going to be required is true.
+02:17 In fact, the length is required, the name is required,
+02:20 whether it's venomous is required.
+02:22 We can have things like minimum values have to be like 0.001
+02:27 or things like this.
+02:29 So you can't have like a negative length.
+02:30 There's a lot of cool constraints
+02:32 that we can do with our types here.
+02:33 So this snake is now ready to be used in our database.
+02:38 Let's look at the next one.
+02:39 Let's work on the cage next.
+02:41 So again, import MongoEngine and we'll use that
+02:43 in a few places.
+02:44 This is exactly the same here.
+02:46 So set the default and then the name is
+02:48 just going to be string and so on.
+02:50 So I'll just sketch these out for you.
+02:53 So these seem like reasonable types here, and let's go ahead
+02:55 and set the required properties for things that we require.
+02:59 Most of these would be required,
+03:01 and whether or not we allow dangerous snakes.
+03:03 If you don't set that, let's say no,
+03:05 by default you're not going to have a dangerous snake.
+03:08 Okay, so these are just like the snake before.
+03:10 This however, gets more interesting.
+03:12 We're going to come down here and we're going to set this
+03:14 to be a "mongoengine.EmbeddedDocument"
+03:18 We can have just a single thing, like a booking
+03:20 or embed the snake in the owner or something like that,
+03:25 but we want to have a list of embedded documents
+03:28 and what we need to pass in here is the actual type
+03:32 that is contained in there.
+03:32 So we're going to import "data.bookings.Booking"
+03:35 One other thing that I also realized that I forgot to do
+03:38 in the previous ones and we'll go back and fix that,
+03:39 is we need to tell MongoEngine
+03:41 that this is a top level document.
+03:43 We need to make this have a base class of type document.
+03:47 We'll do that for snakes as well.
+03:54 Now let's go to the booking, we were just working with that.
+03:56 So this one, recall, is the type
+04:00 that's embedded within the cage
+04:03 That's embedded in the cage, that means it's not a document.
+04:06 Right? That would be a top level thing.
+04:07 This is an embedded document.
+04:09 Alright, so this can be contained within other documents,
+04:11 but itself cannot be top level.
+04:14 Let's go ahead and set these, as well.
+04:18 Now, when we're talking about IDs in MongoDB,
+04:20 the default is something called an object ID.
+04:23 Like a UID, or GUID or something,
+04:25 so when we're talking about a reference,
+04:27 typically it doesn't have to be, but it typically is.
+04:33 There we go.
+04:34 We've got our two references as object IDs.
+04:37 We've got our booking date,
+04:38 which does not have to be required,
+04:39 and it doesn't have a default value.
+04:41 This is when was booked,
+04:42 which happens after the booking slot was made available,
+04:47 but at the time of creation of the slot of booking, right,
+04:50 we've like put a note for booking.
+04:51 You have to say the check in and check out date,
+04:53 and again, the reviews.
+04:55 These are not getting set until after.
+04:58 I set this to zero so we can say,
+05:00 like, you know, required to be one to five.
+05:03 They actually rate the thing and then you
+05:05 can sort of exclude the ones that are zero.
+05:08 The final one is owner and it's very, very similar.
+05:10 I'll just sketch that out for you.
+05:13 We've got our flat pieces here.
+05:15 Our register date, name and email
+05:17 and now we're going to have a list of IDs.
+05:19 So we'll come in here and say "mongoengine.ListField"
+05:23 for both of them.
+05:26 So this'll let us store the object IDs
+05:28 that refer to the snakes and the object IDs
+05:30 that refer to the cages.
+05:32 Last thing to do is make the base class the document here.
+05:36 Alright, so what have we done?
+05:38 We've set all of the fields to their respective types
+05:41 out of MongoEngine as descriptors.
+05:43 We've set either default or required values
+05:46 and we've set the metadata,
+05:48 which talks about which database connection to use
+05:50 and what to call the collection
+05:52 when it goes into the database.
+05:54 And we've done that for our three top level items here.
+05:58 The one that is different and stands out is the booking,
+06:00 which is embedded within the cage
+06:03 and this is an embedded document,
+06:06 but otherwise everything goes pretty much the same.

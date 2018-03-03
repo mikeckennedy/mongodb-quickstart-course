@@ -1,0 +1,121 @@
+00:01 Let's add a bookable time to one of our existing cages.
+00:05 We were able to register cages and list them.
+00:07 Now let's make them available for snakes to stay in.
+00:12 We're going to work on this update availability
+00:14 that we did here.
+00:15 We've got our requirement that you have to have an account
+00:18 because they're your cages,
+00:20 whose cages you're going to manage, things like that.
+00:23 And we're going to just print out the list cages.
+00:25 I've changed that slightly so it has a number.
+00:27 I'll show you really quick.
+00:29 I'm using enumerate in an index.
+00:32 It says one, two, three instead of star, star, star
+00:34 because we want to ask like,
+00:35 "hey, what cage do you want to work with?"
+00:38 We're going to add that here
+00:40 and just for the sake of time I'm just going to paste that.
+00:42 So it's going to say, "What cage do you want?"
+00:45 Either you can cancel or it's going to parse that
+00:47 into an integer
+00:48 and then we're going to work with a particular cage.
+00:51 Let's go down here and say "selected_cage"
+00:55 Oh, first we need the cages.
+00:56 Let's say "cages = " we'll just use our service again.
+01:00 Get the cages for "state.active_account"
+01:05 We'll go down here and say "cages[cage_number-1]
+01:10 Because we're showing it to them one, two, three.
+01:11 We got to convert that back to zero base.
+01:15 Once we've gotten our cage set, we need to get the dates.
+01:18 We've selected this cage.
+01:19 We'll say the name that you're going to work with.
+01:20 We're going to say enter date, year, month, day
+01:24 that you'd like to start this available time slot on
+01:27 and for how many days.
+01:28 I want to start a particular date
+01:30 and make that available for five days.
+01:34 We're using this thing called parser.
+01:37 That comes from "dateutil"
+01:39 so python-dateutil is the module name.
+01:41 It's in the requirements already.
+01:43 Parser is a really sweet way to parse date times.
+01:47 It has many, many different formats it understands.
+01:50 We're going to use that
+01:51 instead of the built-in date-time parsing.
+01:53 Once we have this, we just need to go and use our service
+01:56 and write another data access method.
+01:58 We'll say "svc.add_available_date"
+02:02 What are we going to pass?
+02:02 We have to have the account.
+02:03 Let's say active account there.
+02:07 Select the cage that we're going to add it to.
+02:09 We have to have the start date and the days.
+02:13 Let's go ahead and say "state.reload_account"
+02:16 This might change the account.
+02:19 Then we want to have a little success message like
+02:22 hey, good job.
+02:26 And F String this.
+02:32 Now we're down to just pure data access and MOGO,
+02:35 the interesting part, right?
+02:37 Let's go have PyCharm add that function.
+02:41 We'll have a few things here.
+02:43 This is going to be an owner.
+02:48 Cage, date, time.
+02:58 And an "int" and it's going to return nothing.
+03:01 This looks great.
+03:02 Remember what we're adding here is actually a booking.
+03:06 Bookings are not top-level items.
+03:08 But we'll go and create one to get started.
+03:10 I'm going to say booking.
+03:11 It's a booking like so.
+03:14 We just got to set the properties.
+03:17 This one we got to do a tiny bit of math here.
+03:20 We'll say "start_date + timedelta"
+03:30 Now we want to change the cage.
+03:32 The way it's working probably is fine.
+03:34 Just change the cage and call save.
+03:36 But I want to make sure that we absolutely are working
+03:39 with what's in the database.
+03:40 So I'll say "cage = "
+03:44 Actually we can just look it up here, I think.
+03:46 I'm not sure if we need it again.
+03:48 We'll just say "cage.objects(id=cage.id).first()"
+03:55 Then we're going to go over here, select the cage that was.
+03:59 Let's check that here.
+04:03 Again remember the bookings are not top-level items.
+04:05 They live inside of the cages.
+04:07 Here we're going to append the booking here
+04:09 and we call save on the cage not on the booking object.
+04:15 It doesn't live on its own, it lives inside the cages.
+04:20 Here we can return a cage, I suppose, if we want.
+04:23 Here's kind of the updated cage.
+04:25 We could even tell consumers that that happens.
+04:30 I guess we don't need our active account here, do we?
+04:32 So we can go ahead and drop that.
+04:34 Let's just do a quick clean-up here, get rid of this.
+04:37 We're not doing that, nothing changes there.
+04:39 Okay, great.
+04:40 It looks like we can probably add some time.
+04:43 Let's go and try to test this out here.
+04:46 Going to be the host, we need a log in.
+04:49 Let's see our cages.
+04:51 We've got these two, let's update the cage availability.
+04:54 The large boa constrictor one is available
+04:57 so that's going to be number two.
+04:58 Great, we've selected it.
+05:00 This is going to be 2018/01/01.
+05:06 Brand new year, cages available.
+05:09 Let's say that's for five days.
+05:11 Great, a date was added.
+05:12 Let's add one more.
+05:16 Cool, now if we list our cages,
+05:18 you can see our low large boa constrictor cage
+05:21 now has two available bookings.
+05:23 It has this time for five days and that time for ten days,
+05:26 And neither of them are booked
+05:28 because no guests have come along and actually booked it.
+05:30 But it's available and now they can go and ask,
+05:34 hey what cages are available for my snake?
+05:37 When they ask, this large boa cage should come up.
+05:40 Maybe we'll make a little side money
+05:42 while our boa constrictor is not using it.

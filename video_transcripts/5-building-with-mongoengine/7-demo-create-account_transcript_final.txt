@@ -1,0 +1,187 @@
+00:00 We have our models, our classes in place.
+00:04 We have MongoEngine registered
+00:06 and told to connect to the default values
+00:09 for all the local stuff for MongoDB running locally.
+00:13 I already have MongoDB started up and running.
+00:15 Check out the documentation on how to get that working
+00:17 on your operating system.
+00:18 Like I said at the beginning.
+00:20 And it's time to create an account, logins,
+00:24 basically start implementing all these actions.
+00:26 And now we'll really get to start programming
+00:29 with the entities we've designed in MongoEngine.
+00:32 So let's begin by going down here to create account
+00:35 and program host.
+00:36 And we're going to be able to use this
+00:37 for actually both the host and the guest.
+00:41 Alright, so you can see there's a couple things
+00:42 we have to do, and then we're going to create the account.
+00:44 So let's work on this get name and email first.
+00:46 So we'll say "name= "
+00:47 and we'll just use simple input stuff.
+00:50 "What is your name?"
+00:53 Something like this.
+00:54 And we'll do email.
+00:58 We should of course have them, you know,
+00:59 give us a password, and things like that.
+01:01 But this is not a real website.
+01:02 We're not really actually logging in,
+01:04 it's just sort of a user creation-type thing.
+01:07 So we're going to create that account.
+01:08 Now I could go write the MongoEngine code
+01:10 to talk to Mongo and do the inserts here.
+01:13 But you'll see that we can do much, much better
+01:15 if we isolate all of these behaviors
+01:18 within a central location
+01:21 that we can use throughout our application.
+01:23 In these NoSQL databases,
+01:25 these document databases,
+01:27 there's not much structure in the database.
+01:30 We already have some structure added
+01:32 by having our classes, our MongoEngine types
+01:35 that we work with.
+01:36 We can also do a little bit better
+01:38 by having like a centralized data access piece.
+01:41 That's what we're going to work with here.
+01:44 Let's go create something called a "data_service"
+01:47 And we'll just put a bunch of functions
+01:49 that we need to work with here.
+01:51 Let's go back and let's import this,
+01:53 and I'm going to import in a little short way.
+01:55 So we'll say "import_services.data_service as svc"
+02:02 We're just going to use the functions of that module
+02:04 by calling it that.
+02:05 We come back down here.
+02:07 Instead of saying not implemented,
+02:09 let's say this.
+02:12 "svc.create_account()"
+02:15 and we're going to pass the name and the email.
+02:18 What we're going to get back is an account.
+02:20 So we want to actually store that
+02:24 in the statefulness of our application
+02:26 again, in a web-app, this would be with cookies
+02:28 and we get it back from the database every time.
+02:30 But we have this state, which has an active account.
+02:34 So what we're going to do is we're going to come up over here
+02:37 and we're going to say "state.active_account = " this.
+02:43 So we're going to get back an account from here.
+02:46 Now PyCharm says,
+02:47 whoa, whoa, whoa, there's something going on here.
+02:48 There's no account.
+02:49 There's no method called create account or function,
+02:52 but if I hit Alt+Enter,
+02:55 it'll say do you want to create one?
+02:57 Of course we want to create one.
+02:58 So name, let's even give this a little bit of typing here.
+03:03 Say it's going to return an owner.
+03:07 Okay, so that's all well and good.
+03:09 Now we need to use this.
+03:11 So now we get to programming with MongoEngine.
+03:13 How do we create one of these owners?
+03:14 Well, how would you do it if it was a regular class?
+03:18 You would say this.
+03:20 And you would set some properties like name equals name,
+03:23 owner email is that,
+03:28 and now we want to put it in the database.
+03:30 So we do that by calling using
+03:32 what's called the Active Record Design Pattern.
+03:34 We'll just call save right on this.
+03:36 Now we want to return owner.
+03:39 Now the important point here,
+03:40 is when we call save, all the default values are set.
+03:43 And we call save the primary key the _id
+03:47 is automatically generated.
+03:48 Here, it's just ".id" at MongoEngine.
+03:52 But in the database level, it's _id.
+03:54 That's automatically set.
+03:55 So this thing is up and running.
+03:56 We should have everything working well here.
+04:00 So let's go ahead and try to run this
+04:02 and see if everything's hanging together.
+04:04 Let me run it over, like this.
+04:09 So here's our Snakebnb.
+04:10 We're going to go and say we're our host.
+04:12 Notice at the prompt here,
+04:13 this little yellow thing,
+04:15 there's no name.
+04:17 So we'll go and create an account,
+04:19 with my name, my name is Michael,
+04:21 and my email is michael@talkpython.fm.
+04:25 Boom, logged in.
+04:26 You can see now the prompt has my logged in name.
+04:30 The next thing we got to do is just go from top to bottom.
+04:33 Let's go and log in.
+04:34 However, there is a problem.
+04:36 What if I say I want to create an account,
+04:38 and I say my name is Michael2,
+04:40 and I say it's michael@talkpython.fm.
+04:45 If I hit enter, there's just two of those.
+04:47 That's bad.
+04:48 So, what we want to do is
+04:50 we want to do a little check over here.
+04:55 So this is great, we got this working,
+04:56 and let's go ahead and annotate the type here as well.
+04:59 Let's say this is an owner.
+05:02 That's going to let us, when we interact with it later,
+05:05 say things like this and get, you know,
+05:08 all the IntelliSense and what not,
+05:09 Snake IDs, whatever.
+05:11 Okay, now before we do this,
+05:13 we want to verify that the account doesn't exist.
+05:15 So we'll say old account,
+05:19 let's say find an account by email.
+05:20 And again, this doesn't exist,
+05:22 so we'll create this function over here.
+05:25 This will let us see how to query, right?
+05:27 So to insert, we create one of these and we call save.
+05:31 To do the query, we're going to do this,
+05:34 we'll say the "owner = " we work with type
+05:37 and we say objects.
+05:39 Now there's a couple of things we could do.
+05:41 We could say filter, we kind of lose autocomplete here,
+05:44 but that's fine.
+05:44 We could say filter, and we could say "email=email"
+05:48 So we would match one of the fields there.
+05:53 Alright, and we would not put that of course.
+05:55 And this is going to return a query,
+05:57 and we want just one of them.
+05:59 So we'll save first.
+06:00 Now, it turns out when you have just one filter statement,
+06:03 you can actually condense it down like this.
+06:05 So we'll go ahead and write that.
+06:07 And we'll just say "return Owner"
+06:08 Okay, so there's our find account by email.
+06:11 And we'll check if old account,
+06:15 it'll be none if it's not found.
+06:17 So if there's old account will print a few functions,
+06:22 error message, success message,
+06:23 with some coloration, we'll say,
+06:26 "ERROR: Account with email already exists."
+06:31 And let's make this a cool Python 36 F String.
+06:38 Like so.
+06:40 Of course, we want to bail,
+06:41 and we don't want to actually create it.
+06:43 Here, we could maybe do something like that print.
+06:46 Let's do the success created new account with id.
+06:53 And let's say "state.active_account.id" like so.
+06:59 Great, let's just run this one more time.
+07:06 We want to come is as a host,
+07:08 we'll create an account,
+07:09 let's call this Sarah.
+07:11 So Sarah wants to come in,
+07:12 and maybe she's going to be able to like,
+07:14 she's going to be a guest.
+07:16 But right, we're going to use this host path
+07:19 to do it for a second.
+07:19 And so "sarah@talkpython.fm"
+07:24 Great, we've created a new account.
+07:25 Now let's just test this thing again.
+07:28 So we'll say I want to create an account again.
+07:30 Sarah, it didn't actually matter,
+07:32 let's say Susie and it's "sarah@talkpython.fm"
+07:38 This should no longer work.
+07:39 It should go and the query database and find this,
+07:41 and no, no, no error an account email "sarah@talkpython.fm"
+07:45 already exists.
+07:46 Perfect.
+07:47 I think the create account is done.

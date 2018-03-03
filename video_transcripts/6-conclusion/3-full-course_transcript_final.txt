@@ -1,0 +1,61 @@
+00:00 You've learned a bunch of stuff
+00:01 to program MongoDBs in MongoEngine,
+00:04 but there's actually a lot of other things
+00:06 that you need to take into consideration
+00:08 when you're doing MongoDB in production
+00:10 for real applications.
+00:11 So I want to encourage you to check out my paid course,
+00:15 MongoDB for Python Developers,
+00:17 and just some of the things we're covering,
+00:19 you've seen a little bit of it,
+00:20 but there's actually a lot more.
+00:21 So this is over seven hours of professional-grade
+00:24 MongoDB and Python programming,
+00:26 not just MongoEngine, but the core PyMongo,
+00:29 the JavaScript API and so on
+00:31 so let's see a little bit what's covered.
+00:32 So we talk in depth about how to set up your machine,
+00:36 whether it's Windows, Mac, or Linux,
+00:38 the tools that we're going to use,
+00:39 how to get them installed,
+00:41 the theory behind NoSQL,
+00:43 why NoSQL, why document databases,
+00:45 MongoDB's native shell and native query syntax,
+00:48 assuming we run these operations,
+00:50 these queries, filter statements and so on in MongoEngine,
+00:53 how does that map down to the database?
+00:55 This is important
+00:56 because when you're running MongoDB in production,
+00:59 you need to be able to use the tools
+01:01 and the query language to talk to it and manage it, right?
+01:04 And that is in this native query API.
+01:07 How to model data with documents,
+01:09 we did talk about this.
+01:10 We go into more depth in this course.
+01:13 MongoDB from PyMongo, this is the foundation of MongoEngine
+01:17 and basically Python's equivalent
+01:19 of the native query syntax.
+01:21 MongoEngine, we covered a lot of that in this course.
+01:24 This is pretty similar.
+01:25 High-performance techniques,
+01:26 so performance around document design,
+01:28 performance around indexes
+01:30 and using profiling to discover where you need those,
+01:33 so that's covered in this course.
+01:34 And super, super important is how to properly deploy MongoDB
+01:38 in production on the internet so it doesn't get hacked
+01:41 and you don't lose data or anything like that.
+01:44 So if you want to check out this course,
+01:45 here's a tremendously long URL
+01:47 that you very likely don't want to type so type this,
+01:50 bit.ly/mongocourse and that'll take you right there.
+01:53 You can check it out.
+01:53 I encourage you to take this course.
+01:55 If you like what you saw in this course,
+01:57 here's seven more hours going even more in depth.
+02:00 So with that, I want to say thank you.
+02:02 Thank you so much for taking my course.
+02:03 I really hope you learned a lot and you enjoyed it.
+02:05 Please connect with me on Twitter @mkennedy
+02:08 or various other places you find me on the internet.
+02:10 Thanks and see you later.
