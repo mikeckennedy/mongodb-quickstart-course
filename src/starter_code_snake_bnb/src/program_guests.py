@@ -1,6 +1,5 @@
 from infrastructure.switchlang import switch
 import program_hosts as hosts
-from program_hosts import success_msg, error_msg
 import infrastructure.state as state
 
 

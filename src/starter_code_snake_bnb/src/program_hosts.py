@@ -35,7 +35,8 @@ def run():
 def show_commands():
     print('What action would you like to take:')
     print('[C]reate an account')
-    print('[L]ogin to your account')
+    print('Login to your [a]ccount')
+    print('[L]ist your cages')
     print('[R]egister a cage')
     print('[U]pdate cage availability')
     print('[V]iew your bookings')
