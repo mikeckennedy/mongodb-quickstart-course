@@ -119,7 +119,7 @@ def list_cages(suppress_header=False):
     cages = svc.find_cages_for_user(state.active_account)
     print(f"You have {len(cages)} cages.")
     for idx, c in enumerate(cages):
-        print(f' {idx+1}. {c.name} is {c.square_meters} meters.')
+        print(f' {idx + 1}. {c.name} is {c.square_meters} meters.')
         for b in c.bookings:
             print('      * Booking: {}, {} days, booked? {}'.format(
                 b.check_in_date,

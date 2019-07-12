@@ -163,6 +163,7 @@ def view_bookings():
 
     print("You have {} bookings.".format(len(bookings)))
     for b in bookings:
+        # noinspection PyUnresolvedReferences
         print(' * Snake: {} is booked at {} from {} for {} days.'.format(
             snakes.get(b.guest_snake_id).name,
             b.cage.name,

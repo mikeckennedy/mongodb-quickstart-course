@@ -1,7 +1,9 @@
+from typing import Optional
+
 from data.owners import Owner
 import services.data_service as svc
 
-active_account: Owner = None
+active_account: Optional[Owner] = None
 
 
 def reload_account():

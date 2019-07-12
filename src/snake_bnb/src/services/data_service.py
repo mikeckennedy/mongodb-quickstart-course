@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 import datetime
 
@@ -112,7 +112,7 @@ def get_available_cages(checkin: datetime.datetime,
 
 
 def book_cage(account, snake, cage, checkin, checkout):
-    booking: Booking = None
+    booking: Optional[Booking] = None
 
     for b in cage.bookings:
         if b.check_in_date <= checkin and b.check_out_date >= checkout and b.guest_snake_id is None:
@@ -121,6 +121,8 @@ def book_cage(account, snake, cage, checkin, checkout):
 
     booking.guest_owner_id = account.id
     booking.guest_snake_id = snake.id
+    booking.check_in_date = checkin
+    booking.check_out_date = checkout
     booking.booked_date = datetime.datetime.now()
 
     cage.save()
